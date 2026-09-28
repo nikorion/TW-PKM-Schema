@@ -1,0 +1,6 @@
+title: $:/plugins/nikorion/kms-ontology/fields/epistemology
+tags: $:/tags/nikorion/kms/Field
+kind: value
+type: text/vnd.tiddlywiki
+
+The methodological family the knowledge of the tiddler follows. One free value, typed or picked among the values already used.

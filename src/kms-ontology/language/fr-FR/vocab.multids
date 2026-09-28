@@ -1,0 +1,91 @@
+title: $:/plugins/nikorion/kms-ontology/language/fr-FR/
+
+Vocab/role/concept: Concept
+Vocab/role/ref: Référence
+Vocab/role/source: Source
+Vocab/role/guide: Guide
+Vocab/role/snippet: Extrait
+Vocab/role/template: Modèle
+Vocab/role/decision: Arbitrage
+Vocab/role/log: Journal
+Vocab/role/hub: Hub
+Vocab/role/project: Projet
+Vocab/role/tool: Outil
+Vocab/role/task: Tâche
+Vocab/role/tasklist: Liste de tâches
+Vocab/role/routine: Routine
+Vocab/maturity/stub: Ébauche
+Vocab/maturity/rough: Dégrossi
+Vocab/maturity/stable: Stable
+Vocab/lifecycle/active: Actif
+Vocab/lifecycle/obsolete: Obsolète
+Vocab/lifecycle/archived: Archivé
+Vocab/needs/verify: À vérifier
+Vocab/needs/refactor: À factoriser
+Vocab/needs/split: À découper
+Vocab/status/none: Aucun
+Vocab/status/considering: Envisagé
+Vocab/status/todo: À faire
+Vocab/status/doing: En cours
+Vocab/status/paused: En pause
+Vocab/status/done: Fait
+Vocab/status/dropped: Abandonné
+
+Vocab/role/hub/Plural: hubs
+Vocab/role/project/Plural: projets
+Vocab/role/tool/Plural: outils
+Vocab/role/concept/Plural: concepts
+Vocab/role/ref/Plural: références
+Vocab/role/source/Plural: sources
+Vocab/role/guide/Plural: guides
+Vocab/role/routine/Plural: routines
+Vocab/role/snippet/Plural: extraits
+Vocab/role/template/Plural: modèles
+Vocab/role/decision/Plural: arbitrages
+Vocab/role/log/Plural: journaux
+Vocab/role/task/Plural: tâches
+Vocab/role/tasklist/Plural: listes de tâches
+
+Vocab/role/Group/knowledge: Savoir
+Vocab/role/Group/procedure: Procédure
+Vocab/role/Group/reuse: Réemploi
+Vocab/role/Group/register: Registre
+Vocab/role/Group/tracking: Suivi
+
+Vocab/role/Group/knowledge/Hint: Ce qu'on sait — vivant, à revoir
+Vocab/role/Group/procedure/Hint: Comment on s'y prend — vivant, à revoir
+Vocab/role/Group/reuse/Hint: À recopier ou à dupliquer — vivant, à revoir
+Vocab/role/Group/register/Hint: On y ajoute, on n'y retouche pas
+Vocab/role/Group/tracking/Hint: Périssable : à purger une fois retombé
+
+Vocab/role/concept/Hint: Notion expliquée pour elle-même
+Vocab/role/ref/Hint: Données qu'on vient consulter
+Vocab/role/source/Hint: Œuvre extérieure consultée — livre, article, vidéo
+Vocab/role/guide/Hint: Marche à suivre, pas à pas
+Vocab/role/snippet/Hint: Fragment à recopier tel quel
+Vocab/role/template/Hint: Point de départ à dupliquer
+Vocab/role/decision/Hint: Choix tranché, et pourquoi
+Vocab/role/log/Hint: Ce qui s'est passé, daté
+Vocab/role/hub/Hint: Porte d'entrée vers d'autres tiddlers
+Vocab/role/project/Hint: Un projet en lui-même
+Vocab/role/tool/Hint: Un outil, ou un ensemble d'outils, utilisé dans des projets
+Vocab/role/task/Hint: Chose à faire, une seule
+Vocab/role/tasklist/Hint: Tâches suivies ensemble
+Vocab/role/routine/Hint: Procédure qui revient régulièrement
+Vocab/maturity/stub/Hint: Trop mince pour servir — manque de matière
+Vocab/maturity/rough/Hint: Toute la matière est là, la rédaction reste à finir
+Vocab/maturity/stable/Hint: Relu, fiable, on peut s'y appuyer
+Vocab/lifecycle/active/Hint: En circulation
+Vocab/lifecycle/obsolete/Hint: Dépassé : ne plus s'y fier
+Vocab/lifecycle/archived/Hint: Gardé pour mémoire, plus maintenu
+Vocab/needs/verify/Hint: Exactitude douteuse — à contrôler avant de s'y fier
+Vocab/needs/refactor/Hint: Recoupe d'autres tiddlers — fusionner les doublons ou extraire ce qu'ils partagent
+Vocab/needs/split/Hint: Trop long ou trop mêlé — à éclater en tiddlers atomiques
+Vocab/status/none/Hint: Aucun statut
+Vocab/status/considering/Hint: Envisagé, pas encore engagé
+Vocab/status/todo/Hint: Engagé, pas commencé
+Vocab/status/doing/Hint: Commencé, activement suivi
+Vocab/status/paused/Hint: Commencé, puis mis de côté
+Vocab/status/done/Hint: Terminé
+Vocab/status/dropped/Hint: Écarté, on ne le fera pas
+

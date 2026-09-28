@@ -1,0 +1,219 @@
+title: $:/plugins/nikorion/kms-ontology/api
+tags: $:/tags/Global
+type: text/vnd.tiddlywiki
+
+<!--
+	Read API of the kms ontology: the only way the other kms plugins, and wikitext
+	written for a kms wiki, should reach the field definitions, vocabularies, icons
+	and labels. Never read the definition tiddlers or the language strings directly:
+	their titles and fields may change, these names do not.
+
+	A field is defined by `$:/plugins/nikorion/kms-ontology/fields/<field>`, tagged
+	`$:/tags/nikorion/kms/Field`. Its `kind` is one of:
+	  - `value`      one free value
+	  - `list`       a list of free values (titles), like the tags
+	  - `vocab`      one value from a controlled vocabulary
+	  - `vocab-list` several values from a controlled vocabulary
+	Only the slug is ever stored in a field; icons and labels are resolved here, at
+	render time, in the wiki's language (falling back to en-GB, then to the slug).
+
+	Call the functions through the `function` operator, which binds their parameters:
+	`[function[kms-field-label],[role]]`, `[function[kms-vocab-label],[role],<slug>]`.
+	A custom function called as a direct operator (`[kms-field-label[role]]`) does not
+	bind its operand (TW 5.4) and silently returns nothing.
+
+	The label cascades are repeated rather than shared, for that same reason: a shared
+	helper could only be called as a direct operator from inside another function.
+-->
+
+<!-- Every defined field, in canonical order (the `list` of the tag). -->
+\function kms-fields()
+[[$:/tags/nikorion/kms/Field]tagging[]removeprefix[$:/plugins/nikorion/kms-ontology/fields/]]
+\end
+
+\function kms-field-kind(field)
+[[$:/plugins/nikorion/kms-ontology/fields/]addsuffix<field>get[kind]]
+\end
+
+\function kms-field-label(field)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/kms-ontology/language/]] +[addsuffix[/Field/]]
++[addsuffix<field>] +[addsuffix[/Label]]
++[get[text]] +[limit[1]]
+:else[<field>]
+\end
+
+<!-- What the field says, one sentence. Empty when none is shipped. -->
+\function kms-field-description(field)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/kms-ontology/language/]] +[addsuffix[/Field/]]
++[addsuffix<field>] +[addsuffix[/Description]]
++[get[text]] +[limit[1]]
+\end
+
+<!-- Which tiddlers the field applies to, in words. Empty when it applies to every tiddler. -->
+\function kms-field-applies(field)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/kms-ontology/language/]] +[addsuffix[/Field/]]
++[addsuffix<field>] +[addsuffix[/Applies]]
++[get[text]] +[limit[1]]
+\end
+
+<!--
+	The filter deciding which tiddlers the field applies to, as a string, to evaluate
+	with `currentTiddler` set to the tiddler at hand. Empty means every tiddler:
+
+	<$let applies={{{ [function[kms-field-applies-filter],[status]] }}}>
+	<%if [<applies>is[blank]then[yes]] :else[subfilter<applies>] %> … <%endif%>
+	</$let>
+
+	A field that does not apply to a tiddler may still hold a value there (the tiddler
+	changed role since): consumers should keep showing that value, flagged, rather
+	than hide it.
+-->
+\function kms-field-applies-filter(field)
+[[$:/plugins/nikorion/kms-ontology/fields/]addsuffix<field>get[applies-filter]]
+\end
+
+<!-- Vocabulary fields (`vocab`, `vocab-list`) -->
+
+<!-- The allowed values, in display order. -->
+\function kms-vocab-values(field)
+[[$:/plugins/nikorion/kms-ontology/fields/]addsuffix<field>get[list]enlist-input[]]
+\end
+
+<!-- The value standing for the empty field, if any: shown while the field is empty, never stored. -->
+\function kms-vocab-blank(field)
+[[$:/plugins/nikorion/kms-ontology/fields/]addsuffix<field>get[blank-value]]
+\end
+
+<!-- Group slugs, in order; display only (see the `role` definition). -->
+\function kms-vocab-groups(field)
+[[$:/plugins/nikorion/kms-ontology/fields/]addsuffix<field>get[groups]enlist-input[]]
+\end
+
+\function kms-vocab-group-values(field,group)
+[[group-]addsuffix<group>] :map:flat[[$:/plugins/nikorion/kms-ontology/fields/]addsuffix<field>get<currentTiddler>enlist-input[]]
+\end
+
+\function kms-vocab-grouped-values(field)
+[function[kms-vocab-groups],<field>] :map:flat[function[kms-vocab-group-values],<field>,<currentTiddler>]
+\end
+
+<!-- Whatever no group claims, in vocabulary order: offered before the first group. -->
+\function kms-vocab-ungrouped-values(field)
+[function[kms-vocab-values],<field>] :except[function[kms-vocab-grouped-values],<field>]
+\end
+
+\function kms-vocab-group-label(field,group)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/kms-ontology/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/Group/]] +[addsuffix<group>]
++[get[text]] +[limit[1]]
+:else[<group>]
+\end
+
+\function kms-vocab-group-hint(field,group)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/kms-ontology/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/Group/]] +[addsuffix<group>] +[addsuffix[/Hint]]
++[get[text]] +[limit[1]]
+\end
+
+\function kms-vocab-label(field,value)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/kms-ontology/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/]] +[addsuffix<value>]
++[get[text]] +[limit[1]]
+:else[<value>]
+\end
+
+<!-- One-line description of a value, for a tooltip. Empty when none is shipped. -->
+\function kms-vocab-hint(field,value)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/kms-ontology/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/]] +[addsuffix<value>] +[addsuffix[/Hint]]
++[get[text]] +[limit[1]]
+\end
+
+<!-- Plural of a value, for sentences naming the tiddlers that hold it ("tasks"). -->
+\function kms-vocab-plural(field,value)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/kms-ontology/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/]] +[addsuffix<value>] +[addsuffix[/Plural]]
++[get[text]] +[limit[1]]
+:else[<value>]
+\end
+
+<!-- The icon of a value (an emoji). Empty when the value has none. -->
+\function kms-vocab-icon(field,value)
+[[$:/plugins/nikorion/kms-ontology/icons/]addsuffix<field>addsuffix[/]addsuffix<value>get[text]]
+\end
+
+<!--
+	The tiddler holding that icon, fit for a tiddler's own `icon` field, which takes a
+	title. Empty when the value has no icon.
+-->
+\function kms-vocab-icon-tiddler(field,value)
+[[$:/plugins/nikorion/kms-ontology/icons/]addsuffix<field>addsuffix[/]addsuffix<value>] :filter[get[text]]
+\end
+
+<!--
+	Icon and label of a value, as a single text node: what a value looks like wherever
+	it is shown. Being a procedure, it takes its arguments as text: pass a field's
+	value through a transclusion, not a macro call:
+	<$transclude $variable="kms-vocab-item" field="role" value={{!!role}}/>
+-->
+\procedure kms-vocab-item(field,value)
+\whitespace trim
+<$let icon={{{ [function[kms-vocab-icon],<field>,<value>] }}} label={{{ [function[kms-vocab-label],<field>,<value>] }}}>
+<$text text={{{ [<icon>addsuffix[ ]addsuffix<label>trim[]] }}}/>
+</$let>
+\end
+
+<!--
+	One value of a `list` field as a pill, drawn like a tag pill: same classes, same
+	per-value colour cascade (`$:/tags/TiddlerColourFilter`), same contrast-computed
+	foreground, same icon cascade. The core equivalent is local to
+	`$:/core/ui/EditTemplate/tags` (`tag-body-inner`), unreachable from outside — hence
+	this copy, to keep in step with the core on a TiddlyWiki upgrade.
+
+	Where a tag falls back to the palette's `tag-background`, a value falls back to a
+	colour of its own field (`$:/config/nikorion/kms-ontology/<field>/Colour`; its
+	optional `dark` field replaces the text under a palette whose `color-scheme` is
+	`dark`), so pills of different fields stay told apart. `+[trim[]]` is not optional:
+	the colour tiddler's text ends with a newline, which `contrastcolour` cannot parse.
+
+	An editor adds its remove button through the `kms-pill-after` slot, which sees the
+	variables below (`foregroundColor` included):
+	<$transclude $variable="kms-pill" field="technology" value=<<value>>>
+	<$fill $name="kms-pill-after">…</$fill>
+	</$transclude>
+-->
+\procedure kms-pill(field,value)
+\whitespace trim
+<$let palette={{$:/palette}}
+	fallbackTiddler={{{ [[$:/config/nikorion/kms-ontology/]addsuffix<field>addsuffix[/Colour]] }}}
+	fallbackColour={{{ [{$:/palette}get[color-scheme]match[dark]then<fallbackTiddler>get[dark]] :else[<fallbackTiddler>get[text]] +[trim[]] }}}
+>
+<$let colour={{{ [<value>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerColourFilter]!is[draft]get[text]] :and[!match[]] :else[<fallbackColour>] }}}
+	icon={{{ [<value>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerIconFilter]!is[draft]get[text]] }}}
+	colourA={{{ [<palette>getindex[foreground]] }}}
+	colourB={{{ [<palette>getindex[background]] }}}
+	fallbackTarget={{{ [<palette>getindex[tag-background]] }}}
+>
+<$wikify name="foregroundColor" text="""<$macrocall $name="contrastcolour" target=<<colour>> fallbackTarget=<<fallbackTarget>> colourA=<<colourA>> colourB=<<colourB>>/>""">
+<$let backgroundColor=<<colour>>>
+<span class="tc-tag-label tc-tag-list-item tc-small-gap-right kms-pill"
+	data-tag-title=<<value>>
+	style=`color:$(foregroundColor)$; fill:$(foregroundColor)$; background-color:$(backgroundColor)$;`
+>
+<$transclude tiddler=<<icon>>/>
+<$text text=<<value>>/>
+<$slot $name="kms-pill-after"/>
+</span>
+</$let>
+</$wikify>
+</$let>
+</$let>
+\end

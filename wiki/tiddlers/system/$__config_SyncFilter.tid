@@ -1,0 +1,4 @@
+title: $:/config/SyncFilter
+type: text/vnd.tiddlywiki
+
+[is[tiddler]] -[[$:/core]] -[[$:/library/sjcl.js]] -[prefix[$:/boot/]] -[prefix[$:/HistoryList]] -[prefix[$:/StoryList]] -[[$:/language]] -[prefix[$:/nikorion/language/]] -[status[pending]plugin-type[import]] -[[$:/Import]] -[[$:/isEncrypted]] -[prefix[$:/status/]] -[prefix[$:/state/]] -[prefix[$:/temp/]] -[prefix[$:/plugins/nikorion/kms-ontology/]] -[prefix[$:/config/nikorion/kms-ontology/]] -[[$:/tags/nikorion/kms/Field]]

@@ -1,0 +1,68 @@
+title: $:/plugins/nikorion/kms-ontology/language/en-GB/readme
+type: text/vnd.tiddlywiki
+
+!! Overview
+
+The ontology of the //kms// suite: the fields a tiddler of a kms wiki can carry, what each one means, and the values its vocabulary allows — with their icons and their labels in the wiki's language.
+
+This plugin defines; it does not edit. On its own it adds nothing to the editor: [[Base Fields|https://github.com/nikorion/TW-Base-Fields]] puts these fields in the tiddler editor, [[Dynamic Table|https://github.com/nikorion/TW-Dynamic-Table]] shows them as table columns, and both read them from here, so a field or a value is defined once for the whole suite.
+
+!! Fields
+
+{{$:/plugins/nikorion/kms-ontology/reference/fields}}
+
+''Tags'', the core's own field, complete them: the subject itself — what the tiddler is about, one level below its disciplines (within sociology, say, social stratification or urban sociology).
+
+A new tiddler gets none of these fields. Where a //default// is given, that is what the field means as long as it stays empty — nothing is written to the tiddler.
+
+The //Fields// tab of this plugin lists the same fields followed by every value of each vocabulary, with what it means. Both are generated from the definitions, so they always give the wiki's current state.
+
+!! Slugs and labels
+
+A //slug// is the short, lowercase, unpunctuated identifier that stands for a value — `snippet`, `stub`. The word comes from the printing trade: a slug was a line of text cast in a single piece of metal, and newsrooms came to call the short working name written on a story in production its slug. Web publishing kept it for the identifier that stands for something in a URL, or here in a field.
+
+Only the slug is ever written to a field. Icons and labels are display-only, resolved at render time: a value shows the same way everywhere — its icon and its label in the wiki's language, `Snippet` in English, `Extrait` in French — and a wiki stays filterable in any language.
+
+Filters are therefore written against the slug: `[role[guide]]`, `[maturity[stable]]`. A blank value is never stored — list the stubs with `[!has[maturity]]`, not `[maturity[stub]]`. A list field holds several slugs: `[contains:needs[verify]]`, not `[needs[verify]]`.
+
+The vocabularies come with the plugin and cannot be changed from the wiki — there is no vocabulary editor, on purpose: a value added through the interface could not carry its translations. Adding, removing or reordering values means editing the plugin itself: its [[repository|https://github.com/nikorion/TW-KMS-Ontology]] explains how.
+
+!! Using the fields in wikitext
+
+Helpers are exposed globally, for view templates, lists and tables of your own.
+
+`kms-vocab-item` (icon + label of a value) is a //procedure//. A procedure called as `<<name arg>>` receives its arguments as literal text, so a field's value has to be passed through a transclusion rather than a macro call:
+
+```
+<$transclude $variable="kms-vocab-item" field="role" value={{!!role}}/>
+```
+
+The //functions// give the pieces separately — `kms-fields` (every field), `kms-field-label`, `kms-field-description`, `kms-vocab-values`, `kms-vocab-label`, `kms-vocab-icon`, `kms-vocab-hint`… Call them through the `function` operator, which binds their parameters:
+
+```
+<$let slug={{!!role}}>{{{ [function[kms-vocab-label],[role],<slug>] }}}</$let>
+```
+
+A list field's values are drawn as pills, like tags, each field with its own fallback colour:
+
+```
+<$list filter="[enlist{!!technology}]" variable="value">
+<$transclude $variable="kms-pill" field="technology" value=<<value>>/>
+</$list>
+```
+
+!! Requirements
+
+TiddlyWiki >= 5.3.0. No other dependency.
+
+---
+
+!! Credits
+
+Developed with assistance from Anthropic Claude for code, review, and documentation.
+
+---
+
+!! License
+
+MIT — see `LICENSE`.

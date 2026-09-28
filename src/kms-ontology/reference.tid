@@ -1,0 +1,23 @@
+title: $:/plugins/nikorion/kms-ontology/reference
+caption: <<kms-ontology-lingo Reference/Caption>>
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<!--
+	The plugin tab listing every field and vocabulary. Nothing here is written by
+	hand: both tables are generated from the definitions, so the page gives the wiki's
+	current state — a field or a value added, removed or reordered shows up at once.
+-->
+
+<$transclude $variable="kms-ontology-lingo" title="Reference/Intro" $mode="block"/>
+
+{{$:/plugins/nikorion/kms-ontology/reference/fields}}
+
+<h2><<kms-ontology-lingo Reference/VocabulariesHeading>></h2>
+
+<$transclude $variable="kms-ontology-lingo" title="Reference/VocabulariesIntro" $mode="block"/>
+
+{{$:/plugins/nikorion/kms-ontology/reference/vocabularies}}
+
+<$transclude $variable="kms-ontology-lingo" title="Reference/Outro" $mode="block"/>

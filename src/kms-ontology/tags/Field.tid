@@ -1,0 +1,5 @@
+title: $:/tags/nikorion/kms/Field
+list: [[$:/plugins/nikorion/kms-ontology/fields/project]] [[$:/plugins/nikorion/kms-ontology/fields/epistemology]] [[$:/plugins/nikorion/kms-ontology/fields/disciplines]] [[$:/plugins/nikorion/kms-ontology/fields/technology]] [[$:/plugins/nikorion/kms-ontology/fields/equipment]] [[$:/plugins/nikorion/kms-ontology/fields/role]] [[$:/plugins/nikorion/kms-ontology/fields/maturity]] [[$:/plugins/nikorion/kms-ontology/fields/lifecycle]] [[$:/plugins/nikorion/kms-ontology/fields/needs]] [[$:/plugins/nikorion/kms-ontology/fields/status]]
+type: text/vnd.tiddlywiki
+
+Tag of the kms field definitions. Its `list` field gives their canonical order: the order in which `kms-fields()` returns them, and so the order of the reference tab and of any consumer that lists every field. A definition missing from the list comes after, alphabetically.

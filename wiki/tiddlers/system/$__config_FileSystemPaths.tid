@@ -1,0 +1,4 @@
+title: $:/config/FileSystemPaths
+type: text/vnd.tiddlywiki
+
+[prefix[$:/]search-replace:g:regexp[/|\\],[_]addprefix[system/]]

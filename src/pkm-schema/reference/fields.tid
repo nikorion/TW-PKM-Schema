@@ -1,0 +1,50 @@
+title: $:/plugins/nikorion/pkm-schema/reference/fields
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<!-- One row per field, in canonical order. Transcluded by the reference tab and the readme. -->
+
+<table class="pkm-reference">
+<thead>
+<tr>
+<th><<pkm-schema-lingo Reference/Column/Field>></th>
+<th><<pkm-schema-lingo Reference/Column/Slug>></th>
+<th><<pkm-schema-lingo Reference/Column/Kind>></th>
+<th><<pkm-schema-lingo Reference/Column/Default>></th>
+<th><<pkm-schema-lingo Reference/Column/Applies>></th>
+<th><<pkm-schema-lingo Reference/Column/Meaning>></th>
+</tr>
+</thead>
+<tbody>
+<$list filter="[function[pkm-all-fields]]" variable="field">
+<$let kind={{{ [function[pkm-field-kind],<field>] }}}
+	blank={{{ [function[pkm-vocab-blank],<field>] }}}
+	applies={{{ [function[pkm-field-applies],<field>] }}}
+>
+<tr>
+<td><$text text={{{ [function[pkm-field-label],<field>] }}}/></td>
+<td><code><$text text=<<field>>/></code></td>
+<td><$text text={{{ [[Reference/Kind/]addsuffix<kind>] :map[function[pkm-schema-lingo-text],<currentTiddler>] }}}/></td>
+<td>
+<%if [<blank>!match[]] %>
+<$transclude $variable="pkm-vocab-item" field=<<field>> value=<<blank>>/>
+<$text text=" "/>
+<<pkm-schema-lingo Reference/Default/Empty>>
+<%else%>
+—
+<%endif%>
+</td>
+<td>
+<%if [<applies>!match[]] %>
+<$text text=<<applies>>/>
+<%else%>
+<<pkm-schema-lingo Reference/Applies/All>>
+<%endif%>
+</td>
+<td><$text text={{{ [function[pkm-field-description],<field>] }}}/></td>
+</tr>
+</$let>
+</$list>
+</tbody>
+</table>

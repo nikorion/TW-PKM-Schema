@@ -1,4 +1,0 @@
-title: $:/plugins/nikorion/kms-ontology/language/fr-FR/history
-type: text/vnd.tiddlywiki
-
-* ''0.1.0'' -- 2026.09.28 -- Bonjour ! Les champs et vocabulaires de la suite kms, sortis de [[Base Fields|https://github.com/nikorion/TW-Base-Fields]] 0.3.0 pour que tous les plugins kms les lisent au même endroit : une définition par champ (`kind`, vocabulaire, groupes, valeur vide, `applies-filter`), icônes, libellés, descriptions et traductions (en-GB, fr-FR), une API de lecture (`kms-fields`, `kms-field-*`, `kms-vocab-*`, `kms-pill`) et un onglet de référence //Champs// généré.

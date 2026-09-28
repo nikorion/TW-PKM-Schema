@@ -1,0 +1,9 @@
+title: $:/plugins/nikorion/pkm-schema/fields/due
+tags: $:/tags/nikorion/pkm/Field
+kind: date
+applies-filter: [<currentTiddler>get[role]match[task]] [<currentTiddler>get[role]match[tasklist]] [<currentTiddler>get[role]match[routine]] [<currentTiddler>!has[role]]
+type: text/vnd.tiddlywiki
+
+The date a piece of work is due by, stored as `YYYY-MM-DD` — what a date input writes, and a form that sorts and compares as plain text: `[get[due]compare:string:lt[2026-10-01]]`.
+
+Same `applies-filter` as `status`: keep the two in step, and `Field/due/Applies` in each language.

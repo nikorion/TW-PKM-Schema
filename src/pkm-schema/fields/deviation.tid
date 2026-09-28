@@ -1,0 +1,7 @@
+title: $:/plugins/nikorion/pkm-schema/fields/deviation
+tags: $:/tags/nikorion/pkm/Field
+kind: vocab-list
+list: pseudoscience pseudomedicine conspiracy esoteric sophistry
+type: text/vnd.tiddlywiki
+
+Several values from the vocabulary in `list` — counterfeits often come together (a conspiracy theory selling a pseudomedicine): the counterfeits of an open method — they claim its criterion but bypass it, and are irrefutable by construction (Popper's demarcation problem). The hint of each value names the family it imitates and the criterion it bypasses. Companion of `epistemology` and `regime`.

@@ -1,0 +1,10 @@
+title: $:/plugins/nikorion/pkm-schema/fields/lifecycle
+tags: $:/tags/nikorion/pkm/Field
+kind: vocab
+list: active obsolete archived
+blank-value: active
+type: text/vnd.tiddlywiki
+
+One value from the vocabulary in `list`, in display order.
+
+`active` is the blank value (`blank-value`): it stands for the empty field and is never stored, so the field is only ever filled on the few tiddlers that have left circulation — list the live ones with `[!has[lifecycle]]`. Independent of `maturity`.

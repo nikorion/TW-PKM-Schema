@@ -1,0 +1,6 @@
+title: $:/plugins/nikorion/pkm-schema/fields/project
+tags: $:/tags/nikorion/pkm/Field
+kind: value
+type: text/vnd.tiddlywiki
+
+The project the tiddler belongs to. One free value, typed or picked among the values already used.

@@ -1,8 +1,8 @@
 title: $:/nikorion/language/en-GB/Playground/
 
-Intro: The kms ontology defines the fields of the kms suite; the other kms plugins (Base Fields, Dynamic Table) read them through its API. This page calls that API live, in the wiki's language.
+Intro: The pkm schema defines the fields of the pkm suite; the other pkm plugins (PKM Fields, Dynamic Table) read them through its API. This page calls that API live, in the wiki's language.
 FieldsHeading: ! Fields and vocabularies
-FieldsBody: The full reference — every field, then every value of each vocabulary with its meaning — is the //Fields// tab of the plugin: open [[$:/plugins/nikorion/kms-ontology]] from the Control Panel's Plugins tab. It is generated from the definitions, so it always gives the current state.
+FieldsBody: The full reference — every field, then every value of each vocabulary with its meaning — is the //Fields// tab of the plugin: open [[$:/plugins/nikorion/pkm-schema]] from the Control Panel's Plugins tab. It is generated from the definitions, so it always gives the current state.
 ApiHeading: ! The API, live
 ApiBody: Each function is called through the `function` operator, which binds its parameters; the two procedures are called through a transclusion, so a field's value can be passed to them.
 Table/Call: Call

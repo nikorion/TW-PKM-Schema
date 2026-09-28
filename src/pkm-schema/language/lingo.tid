@@ -1,0 +1,44 @@
+title: $:/plugins/nikorion/pkm-schema/language/lingo
+tags: $:/tags/Global
+
+<!--
+pkm-schema wikitext i18n, for the plugin's own UI strings (reference tab, settings).
+The field and vocabulary labels are not read through these: they have functions of
+their own in the API (`pkm-field-label`, `pkm-vocab-label`…), for the other plugins.
+
+Two separate entry points, on purpose: in TiddlyWiki, "render wikitext" and "return a
+string" are two distinct, non-interchangeable mechanisms.
+  - `pkm-schema-lingo` (\procedure) → RENDERS the wikitext (backticks → <code>,
+    links…). Use it for prose in a tiddler body.
+  - `pkm-schema-lingo-text` (\function) → returns the RAW string, the only form
+    usable in an attribute (tooltip=<<…>>), a heading or inline HTML.
+A \procedure cannot serve as an attribute value (its body is a widget, not a string);
+a \function cannot render wikitext. Hence both.
+
+The lang→en-GB→key cascade is repeated rather than factored into a shared \function:
+a custom \function called as a direct filter operator (`[my-fn<arg>]`) does not bind
+its operand in TW 5.4. The strings are shadow tiddlers, so existence is tested with
+`get[text]`, never `is[tiddler]`/`!is[missing]`.
+-->
+
+\procedure pkm-schema-lingo(title)
+\whitespace trim
+<$let _prefix="$:/plugins/nikorion/pkm-schema/language/"
+      _lang={{{ [[$:/language]get[text]get[name]] }}}
+      _suffix={{{ [[/]addsuffix<title>] }}}
+      _key={{{ [<_lang>addprefix<_prefix>addsuffix<_suffix>] }}}>
+<%if [<_key>get[text]] %>
+<$transclude $tiddler=<<_key>>/>
+<%else%>
+<$transclude $tiddler={{{ [[en-GB]addprefix<_prefix>addsuffix<_suffix>] }}}/>
+<%endif%>
+</$let>
+\end
+
+\function pkm-schema-lingo-text(title)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/pkm-schema/language/]] +[addsuffix[/]]
++[addsuffix<title>]
++[get[text]] +[limit[1]]
+:else[<title>]
+\end

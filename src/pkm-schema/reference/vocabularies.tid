@@ -1,0 +1,30 @@
+title: $:/plugins/nikorion/pkm-schema/reference/vocabularies
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<!-- One table per vocabulary field, in canonical order: what is read, what is stored, what it means. -->
+
+<$list filter="[function[pkm-all-fields]] :filter[function[pkm-field-kind],<currentTiddler>prefix[vocab]]" variable="field">
+<$let blank={{{ [function[pkm-vocab-blank],<field>] }}}>
+<h3><$text text={{{ [function[pkm-field-label],<field>] }}}/><$text text=" "/><code><$text text=<<field>>/></code></h3>
+<table class="pkm-reference">
+<thead>
+<tr>
+<th><<pkm-schema-lingo Reference/Column/Value>></th>
+<th><<pkm-schema-lingo Reference/Column/Stored>></th>
+<th><<pkm-schema-lingo Reference/Column/Meaning>></th>
+</tr>
+</thead>
+<tbody>
+<$list filter="[function[pkm-vocab-values],<field>]" variable="slug">
+<tr>
+<td><$transclude $variable="pkm-vocab-item" field=<<field>> value=<<slug>>/></td>
+<td><%if [<slug>match<blank>] %><<pkm-schema-lingo Reference/Stored/Empty>><%else%><code><$text text=<<slug>>/></code><%endif%></td>
+<td><$text text={{{ [function[pkm-vocab-hint],<field>,<slug>] }}}/></td>
+</tr>
+</$list>
+</tbody>
+</table>
+</$let>
+</$list>

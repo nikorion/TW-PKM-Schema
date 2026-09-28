@@ -1,0 +1,35 @@
+title: $:/plugins/nikorion/pkm-schema/language/en-GB/
+
+Field/project/Label: Project
+Field/project/Description: The project the tiddler belongs to: its organisational home.
+Field/epistemology/Label: Epistemology
+Field/epistemology/Description: How the knowledge in the tiddler is produced and validated, when its validity criterion is open to criticism: its methodological families, from the most necessary to the most singular.
+Field/regime/Label: Closed regime
+Field/regime/Description: Knowledge or belief validated by a closed criterion (authority, tradition) or a private one (inner experience, efficacy observed but not theorised): irrefutable, and claimed as such.
+Field/deviation/Label: Deviation
+Field/deviation/Description: A counterfeit of an open method: it claims its criterion but bypasses it, irrefutable by construction — nothing can contradict it (Popper's demarcation problem).
+Field/disciplines/Label: Disciplines
+Field/disciplines/Description: The field(s) of study the tiddler belongs to (hermeneutics, sociology, biology…).
+Field/technology/Label: Technology mobilised
+Field/technology/Description: The technologies the tiddler mobilises: software, languages, platforms, techniques (TiddlyWiki, Node.js…).
+Field/equipment/Label: Equipment mobilised
+Field/equipment/Description: The physical equipment it mobilises: devices, instruments, tools (laptop, soldering iron…).
+Field/role/Label: Role
+Field/role/Description: What the tiddler is for: its function in the wiki — a way in, knowledge, a procedure, something to reuse, a register, tracking, a project or a tool.
+Field/maturity/Label: Maturity
+Field/maturity/Description: How far along the writing is.
+Field/maturity/Applies: every role but registers and tasks
+Field/lifecycle/Label: Lifecycle
+Field/lifecycle/Description: Whether the tiddler is still in circulation. Independent of maturity: a stable tiddler can become obsolete.
+Field/needs/Label: Needs
+Field/needs/Description: The work the tiddler is waiting on.
+Field/needs/Applies: every role but registers and tasks
+Field/status/Label: Status
+Field/status/Description: How far along a piece of work is.
+Field/status/Applies: tasks, task lists and routines, or no role
+Field/priority/Label: Priority
+Field/priority/Description: How urgent a piece of work is.
+Field/priority/Applies: tasks, task lists and routines, or no role
+Field/due/Label: Due
+Field/due/Description: The date a piece of work is due by.
+Field/due/Applies: tasks, task lists and routines, or no role

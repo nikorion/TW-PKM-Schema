@@ -1,30 +1,30 @@
-# TW-KMS-Ontology
+# TW-PKM-Schema
 
-Source of the [TiddlyWiki](https://tiddlywiki.com) plugin `$:/plugins/nikorion/kms-ontology`, the ontology of the *kms* suite: the fields a tiddler of a kms wiki can carry, their controlled vocabularies, icons, labels and translations, and the API the other kms plugins read them through — [TW-Base-Fields](https://github.com/nikorion/TW-Base-Fields) (editor) and [TW-Dynamic-Table](https://github.com/nikorion/TW-Dynamic-Table) (table columns). Pure wikitext, no JavaScript, no UI of its own but a reference tab.
+Source of the [TiddlyWiki](https://tiddlywiki.com) plugin `$:/plugins/nikorion/pkm-schema`, the schema of the *pkm* suite: the fields a tiddler of a pkm wiki can carry, their controlled vocabularies, icons, labels and translations, and the API the other pkm plugins read them through — [TW-PKM-Fields](https://github.com/nikorion/TW-PKM-Fields): the editor, and the columns of [TW-Dynamic-Table](https://github.com/nikorion/TW-Dynamic-Table), which itself knows nothing of the schema. Pure wikitext, no JavaScript, no UI of its own but a reference tab.
 
-This README is for whoever wants to change the ontology. What the fields mean for a wiki user, and how to use them in wikitext, is the plugin's own readme (`src/kms-ontology/language/<lang>/readme.tid`). The demo wiki `docs/TW-KMS-Ontology-Wiki.html` calls the API live in its Playground.
+This README is for whoever wants to change the schema. What the fields mean for a wiki user, and how to use them in wikitext, is the plugin's own readme (`src/pkm-schema/language/<lang>/readme.tid`). The demo wiki `docs/TW-PKM-Schema-Wiki.html` calls the API live in its Playground.
 
 ## Getting started
 
 ```sh
 pnpm install
 pnpm dev     # dev wiki (wiki/) + hot reload; the URL (random free port) is printed on start
-pnpm build   # dist/TW-KMS-Ontology-Plugin.json + docs/TW-KMS-Ontology-Wiki.html
+pnpm build   # dist/TW-PKM-Schema-Plugin.json + docs/TW-PKM-Schema-Wiki.html
 ```
 
-`pnpm dev` pushes any edit under `src/kms-ontology` or `wiki/tiddlers` straight into the browser tab already open; only `plugin.info` restarts the server. Do not reload the tab to see a change: it would come back as the server loaded it at boot. Stop with Ctrl+C twice. To see a change through the editor and the tables, run the suite's integration wiki instead (`../KMS`, `pnpm dev` there): it loads every kms plugin and watches all their sources.
+`pnpm dev` pushes any edit under `src/pkm-schema` or `wiki/tiddlers` straight into the browser tab already open; only `plugin.info` restarts the server. Do not reload the tab to see a change: it would come back as the server loaded it at boot. Stop with Ctrl+C twice. To see a change through the editor and the tables, run the suite's integration wiki instead (`../PKM`, `pnpm dev` there): it loads every pkm plugin and watches all their sources.
 
-To load the plugin in another Node.js wiki, symlink `src/kms-ontology` as `$TIDDLYWIKI_PLUGIN_PATH/nikorion/kms-ontology` and list `"nikorion/kms-ontology"` in that wiki's `tiddlywiki.info`. Requires TiddlyWiki ≥ 5.3.0.
+To load the plugin in another Node.js wiki, symlink `src/pkm-schema` as `$TIDDLYWIKI_PLUGIN_PATH/nikorion/pkm-schema` and list `"nikorion/pkm-schema"` in that wiki's `tiddlywiki.info`. Requires TiddlyWiki ≥ 5.3.0.
 
 ## Source layout
 
-| Path (under `src/kms-ontology/`) | Role |
+| Path (under `src/pkm-schema/`) | Role |
 |---|---|
-| `fields/<field>.tid` | one definition per field, tagged `$:/tags/nikorion/kms/Field`: `kind`, and for a vocabulary `list`, `groups`/`group-<slug>`, `blank-value`; `applies-filter` when the field does not apply to every tiddler |
+| `fields/<field>.tid` | one definition per field, tagged `$:/tags/nikorion/pkm/Field`: `kind`, and for a vocabulary `list`, `groups`/`group-<slug>`, `blank-value`, `tone-<tone>`; `applies-filter` when the field does not apply to every tiddler |
 | `tags/Field.tid` | the tag, whose `list` gives the canonical order of the fields |
 | `icons.multids` | one emoji per `<field>/<value>` |
-| `colours/<field>.tid` | fallback pill colour of a `list` field (`$:/config/nikorion/kms-ontology/<field>/Colour`; text: light palette, `dark` field: dark palette) |
-| `api.tid` | the read API: `kms-fields`, `kms-field-*`, `kms-vocab-*` functions, `kms-vocab-item` and `kms-pill` procedures |
+| `colours/<field>.tid` | fallback pill colour of a `list` field (`$:/config/nikorion/pkm-schema/<field>/Colour`; text: light palette, `dark` field: dark palette) |
+| `api.tid` | the read API: `pkm-all-fields`, `pkm-field-*`, `pkm-applies-to`, `pkm-is-stale`, `pkm-actual-value`, `pkm-vocab-*` (`pkm-vocab-tooltip` included), `pkm-tones` functions, `pkm-vocab-item` and `pkm-pill` procedures |
 | `language/<lang>/fields.multids` | `Field/<field>/Label`, `…/Description`, optional `…/Applies` |
 | `language/<lang>/vocab.multids` | `Vocab/<field>/<value>` labels, optional `…/Hint`, role `…/Plural`, group names `Vocab/<field>/Group/<slug>` (+ `…/Hint`) |
 | `reference.tid`, `reference/*.tid` | the *Fields* tab, generated from the definitions (the field table is also transcluded by the readme) |
@@ -32,21 +32,23 @@ To load the plugin in another Node.js wiki, symlink `src/kms-ontology` as `$TIDD
 
 ## How it works
 
-- **Definitions are data, the API is the contract.** Consumers never read `fields/*` or the language strings directly; they call the `kms-*` functions (through the `function` operator, which binds parameters: a custom function called as a direct operator does not, TW 5.4). Renaming a definition field or a language key is internal; renaming or changing an API function breaks the suite.
+- **Definitions are data, the API is the contract.** Consumers never read `fields/*` or the language strings directly; they call the `pkm-*` functions (through the `function` operator, which binds parameters: a custom function called as a direct operator does not, TW 5.4). Renaming a definition field or a language key is internal; renaming or changing an API function breaks the suite.
 - **Only the slug is stored.** Icons and labels are resolved at render time, in the wiki's language, falling back to en-GB, then to the slug itself.
 - **Blank value.** A vocabulary's `blank-value` stands for the empty field and is never stored; consumers show it while the field is empty and clear the field when it is chosen.
 - **Applicability.** `applies-filter` (evaluated with `currentTiddler`) says where a field means something. Consumers hide the field elsewhere — unless it holds a value, which they keep showing, flagged.
-- **Unresolved functions fail silently.** A consumer must check that the ontology defines a field (`[[$:/plugins/nikorion/kms-ontology/fields/<field>]get[kind]]`) before calling any `kms-*` function on it: an undefined function called through `function` returns every tiddler of the wiki.
+- **Tones.** A vocabulary value may carry a tone (`tone-success: done` lists the values with the `success` tone). It says how a tiddler holding it reads — done, set aside — never how to draw it; `pkm-tones` gives a tiddler's tones, from the vocabulary fields that apply to it only. Consumers map a tone to a style of their own (PKM Fields: a table row class `nk-dyntable-row-<tone>`). Tones in use: `success`, `muted`.
+- **Unresolved functions fail silently.** A consumer must check that the schema defines a field (`[[$:/plugins/nikorion/pkm-schema/fields/<field>]get[kind]]`) before calling any `pkm-*` function on it: an undefined function called through `function` returns every tiddler of the wiki.
 
 ## Extending
 
 - **A vocabulary value**: its slug in the `list` of `fields/<field>.tid` (for `role`, also in a `group-<slug>`, or it is offered before the first group), its icon in `icons.multids`, its label (and optional hint) in each `language/<lang>/vocab.multids`. A new role also needs its `…/Plural` in each language. Without a label a value shows its slug; without an icon, no icon.
-- **A field**: a `fields/<field>.tid` definition (tagged, with its `kind`), its place in the `list` of `tags/Field.tid`, its label and description in each `language/<lang>/fields.multids` (and `…/Applies` with an `applies-filter`), its values as above for a vocabulary, a `colours/<field>.tid` for a list. Base Fields and Dynamic Table pick it up with no change; see their READMEs for the optional touches (editor row, core field list).
-- **A new `kind`** is a change to the contract: every consumer needs a control/template for it.
+- **A field**: a `fields/<field>.tid` definition (tagged, with its `kind`), its place in the `list` of `tags/Field.tid`, its label and description in each `language/<lang>/fields.multids` (and `…/Applies` with an `applies-filter`), its values as above for a vocabulary, a `colours/<field>.tid` for a list. PKM Fields picks it up with no change, in the editor and in the tables; see its README for the optional touches (editor row, radio control, core field list).
+- **A tone**: list its values in a `tone-<tone>` field of the definition. A new tone name also needs a style in each consumer that shows tones.
+- **A new `kind`** is a change to the contract: every consumer needs a control/template for it (PKM Fields: an editor control and a table cell).
 
 ## On a TiddlyWiki upgrade
 
-`kms-pill` copies the core's `tag-body-inner` (colour and icon cascades, `contrastcolour`), a procedure local to `$:/core/ui/EditTemplate/tags` and so unreachable from outside: diff it against the new core and resync.
+`pkm-pill` copies the core's `tag-body-inner` (colour and icon cascades, `contrastcolour`), a procedure local to `$:/core/ui/EditTemplate/tags` and so unreachable from outside: diff it against the new core and resync.
 
 ## License
 

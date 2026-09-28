@@ -1,0 +1,6 @@
+title: $:/plugins/nikorion/pkm-schema/settings
+tags: $:/tags/ControlPanel/SettingsTab
+caption: <<pkm-schema-lingo Settings/Caption>>
+type: text/vnd.tiddlywiki
+
+<<pkm-schema-lingo Settings/Placeholder>>

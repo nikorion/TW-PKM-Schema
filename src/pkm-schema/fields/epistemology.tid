@@ -1,0 +1,9 @@
+title: $:/plugins/nikorion/pkm-schema/fields/epistemology
+tags: $:/tags/nikorion/pkm/Field
+kind: vocab
+list: formal natural social hermeneutic applied philosophy
+type: text/vnd.tiddlywiki
+
+One value from the vocabulary in `list`: the methodological family, among those whose validity criterion is open to criticism, by which the knowledge of the tiddler is produced and validated. Ordered from the most necessary to the most singular; the last two, `applied` and `philosophy`, cut across the others — they work on the objects of every family, but a piece of knowledge is validated by one criterion only: engineering mobilises physics yet is validated by efficacy, so it is `applied`. A tiddler that seems to need two families mixes two pieces of knowledge, and should be split.
+
+Knowledge validated by a closed or private criterion goes in `regime`, a counterfeit of an open method in `deviation`: the three fields share one reading grid.

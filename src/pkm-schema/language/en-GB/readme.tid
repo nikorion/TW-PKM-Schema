@@ -1,0 +1,93 @@
+title: $:/plugins/nikorion/pkm-schema/language/en-GB/readme
+type: text/vnd.tiddlywiki
+
+!! Overview
+
+The schema of the //pkm// suite: the fields a tiddler of a pkm wiki can carry, what each one means, and the values its vocabulary allows — with their icons and their labels in the wiki's language.
+
+This plugin defines; it does not edit. On its own it adds nothing to the editor: [[PKM Fields|https://github.com/nikorion/TW-PKM-Fields]] puts these fields in the tiddler editor, and in the columns of [[Dynamic Table|https://github.com/nikorion/TW-Dynamic-Table]] when it is installed, reading them from here: a field or a value is defined once for the whole suite.
+
+!! Fields
+
+{{$:/plugins/nikorion/pkm-schema/reference/fields}}
+
+''Tags'', the core's own field, complete them: the subject itself — what the tiddler is about, one level below its disciplines (within sociology, say, social stratification or urban sociology).
+
+A new tiddler gets none of these fields. Where a //default// is given, that is what the field means as long as it stays empty — nothing is written to the tiddler.
+
+The //Fields// tab of this plugin lists the same fields followed by every value of each vocabulary, with what it means. Both are generated from the definitions, so they always give the wiki's current state.
+
+''Tasks'' are tiddlers whose role is `task` (or `tasklist`, `routine`): `status` says how far along they are, `priority` how urgent (`2` high, `1` normal, `0` low: sorting on it orders by urgency), `due` by when (`YYYY-MM-DD`). Some values have a //tone//, which the tables follow: a `done` task reads as done, a `dropped` one as set aside.
+
+```
+[role[task]!status[done]!status[dropped]sort[due]]
+```
+
+!! Epistemology
+
+Three fields place a piece of knowledge by its //validity criterion// — how one knows, not what about:
+
+* ''Epistemology'' — the criterion is ''open to criticism'', and respected (and, for the natural sciences, refutable): knowledge validated by a method a discipline opens to criticism. Its families run from the most necessary to the most singular — formal, natural, human and social sciences, hermeneutic knowledge — and the last two, applied sciences and philosophy, cut across the others: they work on the objects of every family, but a piece of knowledge is validated by one criterion only. One value; a tiddler that seems to need two mixes two pieces of knowledge, and should be split.
+* ''Closed regime'' — the criterion is ''closed'' (authority, tradition) or ''private'' (inner experience, efficacy observed but not theorised): irrefutable, and claimed as such. Traditional and experiential knowledge, religious and spiritual beliefs. One value, settled in a mixed case by what is invoked as proof.
+* ''Deviation'' — an open criterion ''claimed but bypassed'': irrefutable by construction, nothing can contradict it — Popper's demarcation problem. Each deviation imitates a family and bypasses its criterion: pseudoscience, pseudomedicine, conspiracy theories, esoteric overinterpretation, sophistry. Several can come together.
+
+The fields can combine: a study of astrology is //Human and social sciences// about a //Pseudoscience//. Hover over a value to see its guiding question and how it is validated.
+
+Two words this grid relies on:
+
+* ''Deduction'' starts from general premises (axioms, rules) and draws their necessary consequences, with no need to look at the world: if the premises are true and the rule of inference valid, the conclusion is necessarily true.
+* ''Interpretation'' starts from a singular object, ambiguous by nature (a text, a gesture, a work, a historical event), and builds its most coherent meaning, taking into account the context, the plausible intention, the usages of the time. No mechanical rule yields a single necessary answer: two competent interpreters can reach different readings of the same text, both defensible, because the object has no meaning fixed apart from the act of reading. The reasoning goes from the whole to the parts and back in a loop — the //hermeneutic circle// —, not along a linear chain of necessary consequences. //Hermeneutic knowledge// is this practice; //hermeneutics// alone, in its modern sense, is its philosophy — a reflection on interpretation as a human way of being.
+
+!! Slugs and labels
+
+A //slug// is the short, lowercase, unpunctuated identifier that stands for a value — `snippet`, `stub`. The word comes from the printing trade: a slug was a line of text cast in a single piece of metal, and newsrooms came to call the short working name written on a story in production its slug. Web publishing kept it for the identifier that stands for something in a URL, or here in a field.
+
+Only the slug is ever written to a field. Icons and labels are display-only, resolved at render time: a value shows the same way everywhere — its icon and its label in the wiki's language, `Snippet` in English, `Extrait` in French — and a wiki stays filterable in any language.
+
+Filters are therefore written against the slug: `[role[guide]]`, `[maturity[stable]]`. A blank value is never stored — list the stubs with `[!has[maturity]]`, not `[maturity[stub]]`. A list field holds several slugs: `[contains:needs[verify]]`, not `[needs[verify]]`.
+
+The vocabularies come with the plugin and cannot be changed from the wiki — there is no vocabulary editor, on purpose: a value added through the interface could not carry its translations. Adding, removing or reordering values means editing the plugin itself: its [[repository|https://github.com/nikorion/TW-PKM-Schema]] explains how.
+
+!! Using the fields in wikitext
+
+Helpers are exposed globally, for view templates, lists and tables of your own.
+
+`pkm-vocab-item` (icon + label of a value) is a //procedure//. A procedure called as `<<name arg>>` receives its arguments as literal text, so a field's value has to be passed through a transclusion rather than a macro call:
+
+```
+<$transclude $variable="pkm-vocab-item" field="role" value={{!!role}}/>
+```
+
+The //functions// give the pieces separately — `pkm-all-fields` (every field), `pkm-field-label`, `pkm-field-description`, `pkm-vocab-values`, `pkm-vocab-label`, `pkm-vocab-icon`, `pkm-vocab-hint`… Call them through the `function` operator, which binds their parameters:
+
+```
+<$let slug={{!!role}}>{{{ [function[pkm-vocab-label],[role],<slug>] }}}</$let>
+```
+
+A list field's values are drawn as pills, like tags, each field with its own fallback colour. A value whose tiddler has a `caption` shows that caption instead (the value itself as the tooltip) — a caption can be translated, the value stays the same in every language:
+
+```
+<$list filter="[enlist{!!technology}]" variable="value">
+<$transclude $variable="pkm-pill" field="technology" value=<<value>>/>
+</$list>
+```
+
+Whether a field applies to a tiddler, and the tones a tiddler takes from its values: `[function[pkm-applies-to],[status],<currentTiddler>]` (`yes` or nothing), `[function[pkm-tones],<currentTiddler>]` (`success`, `muted`…).
+
+Whether a field is //stale// on a tiddler — it holds a value although it does not apply (its role changed since) —: `[function[pkm-is-stale],[status],<currentTiddler>]` (the tiddler, or nothing). A value's tooltip — its hint, then the stored value when its label differs — is `[function[pkm-vocab-tooltip],[role],[guide]]`; `[function[pkm-actual-value],<value>]` gives the "actual value: …" line alone, for any value shown otherwise than as stored.
+
+!! Requirements
+
+TiddlyWiki >= 5.3.0. No other dependency.
+
+---
+
+!! Credits
+
+Developed with assistance from Anthropic Claude for code, review, and documentation.
+
+---
+
+!! License
+
+MIT — see `LICENSE`.

@@ -1,8 +1,8 @@
 title: $:/nikorion/language/fr-FR/Playground/
 
-Intro: L'ontologie kms définit les champs de la suite kms ; les autres plugins kms (Base Fields, Dynamic Table) les lisent via son API. Cette page appelle cette API en direct, dans la langue du wiki.
+Intro: Le schéma pkm définit les champs de la suite pkm ; les autres plugins pkm (PKM Fields, Dynamic Table) les lisent via son API. Cette page appelle cette API en direct, dans la langue du wiki.
 FieldsHeading: ! Champs et vocabulaires
-FieldsBody: La référence complète — chaque champ, puis chaque valeur de chaque vocabulaire avec son sens — est l'onglet //Champs// du plugin : ouvrir [[$:/plugins/nikorion/kms-ontology]] depuis l'onglet Plugins du panneau de contrôle. Elle est générée à partir des définitions : elle donne toujours l'état courant.
+FieldsBody: La référence complète — chaque champ, puis chaque valeur de chaque vocabulaire avec son sens — est l'onglet //Champs// du plugin : ouvrir [[$:/plugins/nikorion/pkm-schema]] depuis l'onglet Plugins du panneau de contrôle. Elle est générée à partir des définitions : elle donne toujours l'état courant.
 ApiHeading: ! L'API en direct
 ApiBody: Chaque fonction s'appelle via l'opérateur `function`, qui lie ses paramètres ; les deux procédures s'appellent par une transclusion, pour pouvoir leur passer la valeur d'un champ.
 Table/Call: Appel

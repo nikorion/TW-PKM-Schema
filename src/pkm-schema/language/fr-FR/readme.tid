@@ -1,0 +1,93 @@
+title: $:/plugins/nikorion/pkm-schema/language/fr-FR/readme
+type: text/vnd.tiddlywiki
+
+!! Aperçu
+
+Le schéma de la suite //pkm// : les champs que peut porter un tiddler d'un wiki pkm, ce que chacun signifie, et les valeurs que permet son vocabulaire — avec leurs icônes et leurs libellés dans la langue du wiki.
+
+Ce plugin définit, il n'édite pas. Seul, il n'ajoute rien à l'éditeur : [[PKM Fields|https://github.com/nikorion/TW-PKM-Fields]] place ces champs dans l'éditeur de tiddler, et dans les colonnes de [[Dynamic Table|https://github.com/nikorion/TW-Dynamic-Table]] quand il est installé, en les lisant ici : un champ ou une valeur se définit une seule fois pour toute la suite.
+
+!! Champs
+
+{{$:/plugins/nikorion/pkm-schema/reference/fields}}
+
+Les ''Tags'', champ propre au core, les complètent : le sujet lui-même — ce dont parle le tiddler, un niveau sous ses disciplines (en sociologie, par exemple, la stratification sociale ou la sociologie urbaine).
+
+Un nouveau tiddler ne reçoit aucun de ces champs. Là où une valeur //par défaut// est indiquée, c'est ce que vaut le champ tant qu'il reste vide — rien n'est écrit dans le tiddler.
+
+L'onglet //Champs// de ce plugin reprend ces champs, suivis de chaque valeur de chaque vocabulaire avec son sens. Les deux sont générés à partir des définitions : ils donnent toujours l'état courant du wiki.
+
+Les ''tâches'' sont les tiddlers dont le rôle est `task` (ou `tasklist`, `routine`) : `status` dit où elles en sont, `priority` leur urgence (`2` haute, `1` normale, `0` basse : trier sur ce champ suit l'urgence), `due` leur échéance (`AAAA-MM-JJ`). Certaines valeurs ont un //ton//, que les tableaux suivent : une tâche `done` se lit comme faite, une tâche `dropped` comme écartée.
+
+```
+[role[task]!status[done]!status[dropped]sort[due]]
+```
+
+!! Épistémologie
+
+Trois champs situent un savoir par son //critère de validité// — comment on sait, et non sur quoi :
+
+* ''Épistémologie'' — le critère est ''ouvert à la critique'', et respecté (et, pour les sciences de la nature, réfutable) : un savoir validé par une méthode disciplinaire ouverte à la critique. Ses familles vont du plus nécessaire au plus singulier — sciences formelles, de la nature, humaines et sociales, savoirs herméneutiques —, et les deux dernières, sciences appliquées et philosophie, sont transversales : elles s'exercent sur les objets de toutes les familles, mais un savoir n'est validé que par un critère. Une seule valeur ; un tiddler qui semble en demander deux mêle deux savoirs, et gagnerait à être découpé.
+* ''Régime fermé'' — le critère est ''fermé'' (autorité, tradition) ou ''privé'' (expérience intérieure, efficacité constatée mais pas théorisée) : irréfutable, et revendiqué comme tel. Savoirs traditionnels et d'expérience, croyances religieuses et spirituelles. Une seule valeur, tranchée dans un cas mixte par ce qui est invoqué comme preuve.
+* ''Dévoiement'' — un critère ouvert ''revendiqué mais contourné'' : irréfutable par construction, rien ne peut le contredire — le problème de la démarcation (Popper). Chaque dévoiement imite une famille et en contourne le critère : pseudo-sciences, pseudo-médecines, théories du complot, surinterprétation ésotérique, sophismes. Plusieurs peuvent se cumuler.
+
+Les champs se combinent : une étude de l'astrologie relève des //Sciences humaines et sociales// et porte sur une //Pseudo-science//. Survoler une valeur montre sa question directrice et ce qui la valide.
+
+Deux mots sur lesquels repose cette grille :
+
+* La ''déduction'' part de prémisses générales (axiomes, règles) et en tire des conséquences nécessaires, sans avoir besoin de regarder le monde : si les prémisses sont vraies et la règle d'inférence valide, la conclusion est nécessairement vraie.
+* L'''interprétation'' part d'un objet singulier et ambigu par nature (texte, geste, œuvre, événement historique) et cherche à en construire le sens le plus cohérent possible, en tenant compte du contexte, de l'intention plausible, des usages de l'époque. Aucune règle mécanique ne produit une seule réponse nécessaire : deux interprètes compétents peuvent aboutir à des lectures différentes et également défendables du même texte, parce que l'objet n'a pas de sens fixé indépendamment de l'acte de lecture. Le raisonnement va du tout aux parties et des parties au tout, en boucle — le //cercle herméneutique// —, et non le long d'une chaîne linéaire de conséquences nécessaires. Les //savoirs herméneutiques// sont cette pratique ; l'//herméneutique// seule, au sens moderne, en est la philosophie — une réflexion sur l'interprétation comme manière d'être de l'humain.
+
+!! Slugs et libellés
+
+Un //slug// est l'identifiant court, en minuscules et sans ponctuation, qui représente une valeur — `snippet`, `stub`. Le mot vient de l'imprimerie : un slug était une ligne de texte fondue d'un seul bloc de plomb, et les rédactions ont fini par appeler ainsi le nom de travail court porté par un article en cours de production. La publication web l'a gardé pour l'identifiant qui représente quelque chose dans une URL, ou ici dans un champ.
+
+Seul le slug est écrit dans un champ. Icônes et libellés servent uniquement à l'affichage et sont résolus au rendu : une valeur s'affiche partout de la même façon — son icône et son libellé dans la langue du wiki, `Snippet` en anglais, `Extrait` en français — et le wiki reste filtrable quelle que soit la langue.
+
+Les filtres s'écrivent donc sur le slug : `[role[guide]]`, `[maturity[stable]]`. Une valeur vide n'est jamais stockée — les ébauches se listent avec `[!has[maturity]]`, pas `[maturity[stub]]`. Un champ liste contient plusieurs slugs : `[contains:needs[verify]]`, pas `[needs[verify]]`.
+
+Les vocabulaires sont livrés avec le plugin et ne se modifient pas depuis le wiki — il n'y a délibérément pas d'éditeur de vocabulaire : une valeur ajoutée depuis l'interface ne pourrait pas emporter ses traductions. Ajouter, retirer ou réordonner des valeurs demande de modifier le plugin lui-même : son [[dépôt|https://github.com/nikorion/TW-PKM-Schema]] explique comment.
+
+!! Utiliser les champs en wikitext
+
+Des utilitaires sont exposés globalement, pour vos propres modèles d'affichage, listes et tableaux.
+
+`pkm-vocab-item` (icône + libellé d'une valeur) est une //procédure//. Une procédure appelée en `<<nom arg>>` reçoit ses arguments comme du texte littéral : la valeur d'un champ doit donc passer par une transclusion plutôt que par un appel de macro :
+
+```
+<$transclude $variable="pkm-vocab-item" field="role" value={{!!role}}/>
+```
+
+Les //fonctions// en donnent les morceaux séparément — `pkm-all-fields` (tous les champs), `pkm-field-label`, `pkm-field-description`, `pkm-vocab-values`, `pkm-vocab-label`, `pkm-vocab-icon`, `pkm-vocab-hint`… Les appeler via l'opérateur `function`, qui lie bien leurs paramètres :
+
+```
+<$let slug={{!!role}}>{{{ [function[pkm-vocab-label],[role],<slug>] }}}</$let>
+```
+
+Les valeurs d'un champ liste se dessinent en pastilles, comme les tags, chaque champ avec sa couleur de repli. Une valeur dont le tiddler a un `caption` affiche ce caption à la place (la valeur elle-même en info-bulle) — un caption peut se traduire, la valeur reste la même dans toutes les langues :
+
+```
+<$list filter="[enlist{!!technology}]" variable="value">
+<$transclude $variable="pkm-pill" field="technology" value=<<value>>/>
+</$list>
+```
+
+Si un champ s'applique à un tiddler, et les tons qu'un tiddler tire de ses valeurs : `[function[pkm-applies-to],[status],<currentTiddler>]` (`yes` ou rien), `[function[pkm-tones],<currentTiddler>]` (`success`, `muted`…).
+
+Si un champ est //périmé// sur un tiddler — il garde une valeur alors qu'il ne s'applique pas (son rôle a changé depuis) — : `[function[pkm-is-stale],[status],<currentTiddler>]` (le tiddler, ou rien). L'info-bulle d'une valeur — son texte d'aide, puis la valeur stockée quand son libellé en diffère — est `[function[pkm-vocab-tooltip],[role],[guide]]` ; `[function[pkm-actual-value],<value>]` donne seule la ligne « valeur réelle : … », pour toute valeur affichée autrement que stockée.
+
+!! Prérequis
+
+TiddlyWiki >= 5.3.0. Aucune autre dépendance.
+
+---
+
+!! Crédits
+
+Développé avec l'aide d'Anthropic Claude pour le code, la relecture et la documentation.
+
+---
+
+!! Licence
+
+MIT — voir `LICENSE`.

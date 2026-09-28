@@ -1,0 +1,5 @@
+title: $:/tags/nikorion/pkm/Field
+list: [[$:/plugins/nikorion/pkm-schema/fields/project]] [[$:/plugins/nikorion/pkm-schema/fields/epistemology]] [[$:/plugins/nikorion/pkm-schema/fields/regime]] [[$:/plugins/nikorion/pkm-schema/fields/deviation]] [[$:/plugins/nikorion/pkm-schema/fields/disciplines]] [[$:/plugins/nikorion/pkm-schema/fields/technology]] [[$:/plugins/nikorion/pkm-schema/fields/equipment]] [[$:/plugins/nikorion/pkm-schema/fields/role]] [[$:/plugins/nikorion/pkm-schema/fields/maturity]] [[$:/plugins/nikorion/pkm-schema/fields/lifecycle]] [[$:/plugins/nikorion/pkm-schema/fields/needs]] [[$:/plugins/nikorion/pkm-schema/fields/status]] [[$:/plugins/nikorion/pkm-schema/fields/priority]] [[$:/plugins/nikorion/pkm-schema/fields/due]]
+type: text/vnd.tiddlywiki
+
+Tag of the pkm field definitions. Its `list` field gives their canonical order: the order in which `pkm-all-fields()` returns them, and so the order of the reference tab and of any consumer that lists every field. A definition missing from the list comes after, alphabetically.

@@ -1,0 +1,7 @@
+title: $:/plugins/nikorion/pkm-schema/fields/regime
+tags: $:/tags/nikorion/pkm/Field
+kind: vocab
+list: traditional religious
+type: text/vnd.tiddlywiki
+
+One value from the vocabulary in `list`: the regime of knowledge or belief whose validity criterion is closed (authority, tradition) or private (inner experience, efficacy observed but not theorised) — irrefutable, and claimed as such. A mixed case (a traditional medicine with a spiritual side) is settled by what it invokes as proof. Companion of `epistemology` (open criterion) and `deviation` (open criterion claimed but bypassed).

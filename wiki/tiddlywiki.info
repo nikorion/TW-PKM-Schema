@@ -1,9 +1,9 @@
 {
-  "description": "TW-KMS-Ontology development wiki",
+  "description": "TW-PKM-Schema development wiki",
   "plugins": [
     "tiddlywiki/filesystem",
     "tiddlywiki/tiddlyweb",
-    "nikorion/kms-ontology",
+    "nikorion/pkm-schema",
     "nikorion/detect-language"
   ],
   "themes": [
@@ -18,11 +18,11 @@
   "build": {
     "plugin-json": [
       "--output", "dist",
-      "--render", "$:/core/templates/exporters/JsonFile", "TW-KMS-Ontology-Plugin.json", "text/plain", "", "exportFilter", "[[$:/plugins/nikorion/kms-ontology]]"
+      "--render", "$:/core/templates/exporters/JsonFile", "TW-PKM-Schema-Plugin.json", "text/plain", "", "exportFilter", "[[$:/plugins/nikorion/pkm-schema]]"
     ],
     "html": [
       "--output", "docs",
-      "--rendertiddler", "$:/core/save/all", "TW-KMS-Ontology-Wiki.html", "text/plain", "",
+      "--rendertiddler", "$:/core/save/all", "TW-PKM-Schema-Wiki.html", "text/plain", "",
       "publishFilter", "-[[$:/dev/hmr]] -[[$:/config/dev/hmr-port]] -[[$:/config/SyncFilter]] -[[$:/config/FileSystemPaths]] -[[$:/config/OriginalTiddlerPaths]]"
     ]
   }

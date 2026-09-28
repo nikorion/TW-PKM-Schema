@@ -1,0 +1,23 @@
+title: $:/plugins/nikorion/pkm-schema/language/en-GB/
+
+Reference/Caption: Fields
+Reference/Intro: The fields of the pkm schema, in the wiki's language, generated from the definitions themselves: this page always gives the wiki's current state. Filters are written against the //slug//, never the label, so they go on working whichever language the wiki is set to.
+Reference/Column/Field: Field
+Reference/Column/Slug: Slug
+Reference/Column/Kind: Kind
+Reference/Column/Default: Default
+Reference/Column/Applies: Applies to
+Reference/Column/Meaning: Means
+Reference/Kind/value: one free value
+Reference/Kind/list: a list of free values
+Reference/Kind/vocab: one value from a vocabulary
+Reference/Kind/vocab-list: several values from a vocabulary
+Reference/Kind/date: a date
+Reference/Default/Empty: (field left empty)
+Reference/Applies/All: every tiddler
+Reference/VocabulariesHeading: Vocabularies
+Reference/VocabulariesIntro: The values allowed in each vocabulary field, in display order: what you read, what is stored in the field, what it means. A //blank value// stands for the empty field: nothing is stored for it.
+Reference/Column/Value: Value
+Reference/Column/Stored: Stored in the field
+Reference/Stored/Empty: (empty field)
+Reference/Outro: Write filters against the stored value: `[role[guide]]`, `[maturity[stable]]`, `[!has[maturity]]` for the stubs, `[contains:needs[verify]]` for a list field. To show a value to a reader, use `<$transclude $variable="pkm-vocab-item" field="role" value={{!!role}}/>`, which renders its icon and its label in the current language.

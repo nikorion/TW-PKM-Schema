@@ -1,0 +1,293 @@
+title: $:/plugins/nikorion/pkm-schema/api
+tags: $:/tags/Global
+type: text/vnd.tiddlywiki
+
+<!--
+	Read API of the pkm schema: the only way the other pkm plugins, and wikitext
+	written for a pkm wiki, should reach the field definitions, vocabularies, icons
+	and labels. Never read the definition tiddlers or the language strings directly:
+	their titles and fields may change, these names do not.
+
+	A field is defined by `$:/plugins/nikorion/pkm-schema/fields/<field>`, tagged
+	`$:/tags/nikorion/pkm/Field`. Its `kind` is one of:
+	  - `value`      one free value
+	  - `list`       a list of free values (titles), like the tags
+	  - `vocab`      one value from a controlled vocabulary
+	  - `vocab-list` several values from a controlled vocabulary
+	  - `date`       one date, stored as `YYYY-MM-DD`
+	Only the slug is ever stored in a field; icons and labels are resolved here, at
+	render time, in the wiki's language (falling back to en-GB, then to the slug).
+
+	Call the functions through the `function` operator, which binds their parameters:
+	`[function[pkm-field-label],[role]]`, `[function[pkm-vocab-label],[role],<slug>]`.
+	A custom function called as a direct operator (`[pkm-field-label[role]]`) does not
+	bind its operand (TW 5.4) and silently returns nothing.
+
+	The label cascades are repeated rather than shared, for that same reason: a shared
+	helper could only be called as a direct operator from inside another function.
+-->
+
+<!-- Every defined field, in canonical order (the `list` of the tag). -->
+\function pkm-all-fields()
+[[$:/tags/nikorion/pkm/Field]tagging[]removeprefix[$:/plugins/nikorion/pkm-schema/fields/]]
+\end
+
+\function pkm-field-kind(field)
+[[$:/plugins/nikorion/pkm-schema/fields/]addsuffix<field>get[kind]]
+\end
+
+\function pkm-field-label(field)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/pkm-schema/language/]] +[addsuffix[/Field/]]
++[addsuffix<field>] +[addsuffix[/Label]]
++[get[text]] +[limit[1]]
+:else[<field>]
+\end
+
+<!-- What the field says, one sentence. Empty when none is shipped. -->
+\function pkm-field-description(field)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/pkm-schema/language/]] +[addsuffix[/Field/]]
++[addsuffix<field>] +[addsuffix[/Description]]
++[get[text]] +[limit[1]]
+\end
+
+<!-- Which tiddlers the field applies to, in words. Empty when it applies to every tiddler. -->
+\function pkm-field-applies(field)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/pkm-schema/language/]] +[addsuffix[/Field/]]
++[addsuffix<field>] +[addsuffix[/Applies]]
++[get[text]] +[limit[1]]
+\end
+
+<!--
+	The filter deciding which tiddlers the field applies to, as a string, to evaluate
+	with `currentTiddler` set to the tiddler at hand. Empty means every tiddler:
+
+	<$let applies={{{ [function[pkm-field-applies-filter],[status]] }}}>
+	<%if [<applies>is[blank]then[yes]] :else[subfilter<applies>] %> … <%endif%>
+	</$let>
+
+	A field that does not apply to a tiddler may still hold a value there (the tiddler
+	changed role since): consumers should keep showing that value, flagged, rather
+	than hide it.
+-->
+\function pkm-field-applies-filter(field)
+[[$:/plugins/nikorion/pkm-schema/fields/]addsuffix<field>get[applies-filter]]
+\end
+
+<!--
+	`yes` when the field applies to the tiddler — its `applies-filter` accepts it, or it
+	has none — else nothing: `[function[pkm-applies-to],[status],<currentTiddler>]`.
+	The two helpers are internal. The filter string reaches `subfilter` through a
+	variable, a function read where `field` is set; the `:filter` run is what makes
+	`currentTiddler` the tiddler while the string is evaluated.
+-->
+\function pkm-applies-to--filter() [function[pkm-field-applies-filter],<field>]
+\function pkm-applies-to--check(field,tiddler) [<tiddler>] :filter[subfilter<pkm-applies-to--filter>] +[then[yes]]
+\function pkm-applies-to(field,tiddler)
+[<pkm-applies-to--filter>is[blank]then[yes]] :else[function[pkm-applies-to--check],<field>,<tiddler>]
+\end
+
+<!--
+	The tiddler when the field is //stale// on it — it holds a value although the field
+	does not apply to it (its role changed since) —, else nothing:
+	`[function[pkm-is-stale],[status],<currentTiddler>]`. A consumer shows such a value
+	so that it can be seen and cleared, rather than lurk unseen yet still matched by filters.
+-->
+\function pkm-is-stale(field,tiddler) [<tiddler>has<field>] -[function[pkm-applies-to],<field>,<tiddler>then<tiddler>]
+
+<!--
+	"actual value: <value>", in the wiki's language: what a tooltip says of a value shown
+	otherwise than as stored (a label, a caption, a formatted date).
+-->
+\function pkm-actual-value(value) [function[pkm-schema-lingo-text],[ActualValue]addsuffix[ ]addsuffix<value>]
+
+<!-- Vocabulary fields (`vocab`, `vocab-list`) -->
+
+<!-- The allowed values, in display order. -->
+\function pkm-vocab-values(field)
+[[$:/plugins/nikorion/pkm-schema/fields/]addsuffix<field>get[list]enlist-input[]]
+\end
+
+<!-- The value standing for the empty field, if any: shown while the field is empty, never stored. -->
+\function pkm-vocab-blank(field)
+[[$:/plugins/nikorion/pkm-schema/fields/]addsuffix<field>get[blank-value]]
+\end
+
+<!-- Group slugs, in order; display only (see the `role` definition). -->
+\function pkm-vocab-groups(field)
+[[$:/plugins/nikorion/pkm-schema/fields/]addsuffix<field>get[groups]enlist-input[]]
+\end
+
+\function pkm-vocab-group-values(field,group)
+[[group-]addsuffix<group>] :map:flat[[$:/plugins/nikorion/pkm-schema/fields/]addsuffix<field>get<currentTiddler>enlist-input[]]
+\end
+
+\function pkm-vocab-grouped-values(field)
+[function[pkm-vocab-groups],<field>] :map:flat[function[pkm-vocab-group-values],<field>,<currentTiddler>]
+\end
+
+<!-- Whatever no group claims, in vocabulary order: offered before the first group. -->
+\function pkm-vocab-ungrouped-values(field)
+[function[pkm-vocab-values],<field>] :except[function[pkm-vocab-grouped-values],<field>]
+\end
+
+\function pkm-vocab-group-label(field,group)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/pkm-schema/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/Group/]] +[addsuffix<group>]
++[get[text]] +[limit[1]]
+:else[<group>]
+\end
+
+\function pkm-vocab-group-hint(field,group)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/pkm-schema/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/Group/]] +[addsuffix<group>] +[addsuffix[/Hint]]
++[get[text]] +[limit[1]]
+\end
+
+\function pkm-vocab-label(field,value)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/pkm-schema/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/]] +[addsuffix<value>]
++[get[text]] +[limit[1]]
+:else[<value>]
+\end
+
+<!-- One-line description of a value, for a tooltip. Empty when none is shipped. -->
+\function pkm-vocab-hint(field,value)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/pkm-schema/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/]] +[addsuffix<value>] +[addsuffix[/Hint]]
++[get[text]] +[limit[1]]
+\end
+
+<!-- Plural of a value, for sentences naming the tiddlers that hold it ("tasks"). -->
+\function pkm-vocab-plural(field,value)
+[[$:/language]get[text]get[name]else[en-GB]] [[en-GB]]
++[addprefix[$:/plugins/nikorion/pkm-schema/language/]] +[addsuffix[/Vocab/]]
++[addsuffix<field>] +[addsuffix[/]] +[addsuffix<value>] +[addsuffix[/Plural]]
++[get[text]] +[limit[1]]
+:else[<value>]
+\end
+
+<!-- The icon of a value (an emoji). Empty when the value has none. -->
+\function pkm-vocab-icon(field,value)
+[[$:/plugins/nikorion/pkm-schema/icons/]addsuffix<field>addsuffix[/]addsuffix<value>get[text]]
+\end
+
+<!--
+	Tones. A vocabulary may give some of its values a tone, one definition field per
+	tone listing the values it marks (`status`: `tone-success: done`). A tone says how
+	a tiddler holding the value reads, not how to draw it: each consumer maps it to a
+	style of its own. Tones in use: `success` (the work is done), `muted` (set aside).
+-->
+
+<!-- The tone of a value. Empty when it has none. -->
+\function pkm-vocab-tone(field,value)
+[[$:/plugins/nikorion/pkm-schema/fields/]addsuffix<field>fields[]prefix[tone-]] :filter[[$:/plugins/nikorion/pkm-schema/fields/]addsuffix<field>get<currentTiddler>enlist-input[]match<value>] +[limit[1]removeprefix[tone-]]
+\end
+
+<!--
+	The tones of a tiddler: those of the values it holds, in the vocabulary fields that
+	apply to it. A value left in a field that no longer applies (the tiddler changed
+	role since) gives no tone: `[function[pkm-tones],<currentTiddler>]`.
+-->
+\function pkm-tones--of(field,tiddler) [<tiddler>get<field>enlist-input[]] :map:flat[function[pkm-vocab-tone],<field>,<currentTiddler>]
+\function pkm-tones(tiddler)
+[function[pkm-all-fields]] :filter[function[pkm-field-kind],<currentTiddler>prefix[vocab]] :filter[function[pkm-applies-to],<currentTiddler>,<tiddler>] :map:flat[function[pkm-tones--of],<currentTiddler>,<tiddler>] +[!is[blank]each:value[]]
+\end
+
+<!--
+	The tiddler holding that icon, fit for a tiddler's own `icon` field, which takes a
+	title. Empty when the value has no icon.
+-->
+\function pkm-vocab-icon-tiddler(field,value)
+[[$:/plugins/nikorion/pkm-schema/icons/]addsuffix<field>addsuffix[/]addsuffix<value>] :filter[get[text]]
+\end
+
+<!--
+	Tooltip of a vocabulary value: its hint, then — when its label is not the stored slug
+	itself — its `pkm-actual-value`, on a line of its own.
+-->
+\function pkm-vocab-tooltip--newline() [charcode[10]]
+\function pkm-vocab-tooltip--actual(field,value) [function[pkm-vocab-label],<field>,<value>!match<value>] :map[function[pkm-actual-value],<value>]
+\function pkm-vocab-tooltip(field,value) [function[pkm-vocab-hint],<field>,<value>] [function[pkm-vocab-tooltip--actual],<field>,<value>] +[join<pkm-vocab-tooltip--newline>]
+
+<!--
+	Icon and label of a value, as a single text node: what a value looks like wherever
+	it is shown. Being a procedure, it takes its arguments as text: pass a field's
+	value through a transclusion, not a macro call:
+	<$transclude $variable="pkm-vocab-item" field="role" value={{!!role}}/>
+-->
+\procedure pkm-vocab-item(field,value)
+\whitespace trim
+<$let icon={{{ [function[pkm-vocab-icon],<field>,<value>] }}} label={{{ [function[pkm-vocab-label],<field>,<value>] }}}>
+<$text text={{{ [<icon>addsuffix[ ]addsuffix<label>trim[]] }}}/>
+</$let>
+\end
+
+<!--
+	One value of a `list` field as a pill, drawn like a tag pill: same classes, same
+	per-value colour cascade (`$:/tags/TiddlerColourFilter`), same contrast-computed
+	foreground, same icon cascade. The core equivalent is local to
+	`$:/core/ui/EditTemplate/tags` (`tag-body-inner`), unreachable from outside — hence
+	this copy, to keep in step with the core on a TiddlyWiki upgrade.
+
+	Where a tag falls back to the palette's `tag-background`, a value falls back to a
+	colour of its own field (`$:/config/nikorion/pkm-schema/<field>/Colour`; its
+	optional `dark` field replaces the text under a palette whose `color-scheme` is
+	`dark`), so pills of different fields stay told apart. `+[trim[]]` is not optional:
+	the colour tiddler's text ends with a newline, which `contrastcolour` cannot parse.
+
+	Unlike a tag pill, a value whose tiddler has a `caption` shows that caption (wikitext,
+	rendered as the core renders it in a tab, so it can be translated), the value itself
+	in the tooltip (`pkm-actual-value`): the field still holds the value. `tooltip="no"` drops
+	that tooltip, for a pill inside an element whose own tooltip must show (a flagged cell). No
+	tooltip means no `title` attribute at all: an empty one would hide the enclosing element's.
+
+	An editor adds its remove button through the `pkm-pill-after` slot, which sees the
+	variables below (`foregroundColor` included):
+	<$transclude $variable="pkm-pill" field="technology" value=<<value>>>
+	<$fill $name="pkm-pill-after">…</$fill>
+	</$transclude>
+-->
+\procedure pkm-pill(field,value,tooltip:"yes")
+\whitespace trim
+<$let palette={{$:/palette}}
+	fallbackTiddler={{{ [[$:/config/nikorion/pkm-schema/]addsuffix<field>addsuffix[/Colour]] }}}
+	fallbackColour={{{ [{$:/palette}get[color-scheme]match[dark]then<fallbackTiddler>get[dark]] :else[<fallbackTiddler>get[text]] +[trim[]] }}}
+>
+<$let colour={{{ [<value>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerColourFilter]!is[draft]get[text]] :and[!match[]] :else[<fallbackColour>] }}}
+	icon={{{ [<value>] :cascade[all[shadows+tiddlers]tag[$:/tags/TiddlerIconFilter]!is[draft]get[text]] }}}
+	colourA={{{ [<palette>getindex[foreground]] }}}
+	colourB={{{ [<palette>getindex[background]] }}}
+	fallbackTarget={{{ [<palette>getindex[tag-background]] }}}
+>
+<$wikify name="foregroundColor" text="""<$macrocall $name="contrastcolour" target=<<colour>> fallbackTarget=<<fallbackTarget>> colourA=<<colourA>> colourB=<<colourB>>/>""">
+<$let backgroundColor=<<colour>>
+	tip={{{ [<tooltip>match[yes]] :then[<value>has[caption]] :then[function[pkm-actual-value],<value>] }}}
+>
+<span class="tc-tag-label tc-tag-list-item tc-small-gap-right pkm-pill"
+	data-tag-title=<<value>>
+	style=`color:$(foregroundColor)$; fill:$(foregroundColor)$; background-color:$(backgroundColor)$;`
+>
+<$transclude tiddler=<<icon>>/>
+<%if [<value>has[caption]] %>
+<%if [<tip>!match[]] %>
+<span title=<<tip>>><$transclude tiddler=<<value>> field="caption"/></span>
+<%else%>
+<$transclude tiddler=<<value>> field="caption"/>
+<%endif%>
+<%else%>
+<$text text=<<value>>/>
+<%endif%>
+<$slot $name="pkm-pill-after"/>
+</span>
+</$let>
+</$wikify>
+</$let>
+</$let>
+\end

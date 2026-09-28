@@ -1,0 +1,6 @@
+title: $:/plugins/nikorion/pkm-schema/fields/equipment
+tags: $:/tags/nikorion/pkm/Field
+kind: list
+type: text/vnd.tiddlywiki
+
+A list of free values (titles), like the tags. Fallback colour of its pills: `$:/config/nikorion/pkm-schema/equipment/Colour`.

@@ -1,0 +1,4 @@
+title: $:/plugins/nikorion/pkm-schema/language/en-GB/history
+type: text/vnd.tiddlywiki
+
+* ''0.3.0'' -- 2026.09.28 -- Hello! The fields and controlled vocabularies of the pkm suite, in the one place every pkm plugin reads them from: one definition per field (`kind`, vocabulary, groups, blank value, tones, `applies-filter`) for `project`, `epistemology`, `regime`, `deviation`, `disciplines`, `technology`, `equipment`, `role`, `maturity`, `lifecycle`, `needs`, `status`, `priority` and `due`; icons, labels, hints, descriptions and translations (en-GB, fr-FR); a read API (`pkm-all-fields`, `pkm-field-*`, `pkm-vocab-*`, `pkm-applies-to`, `pkm-is-stale`, `pkm-tones`, `pkm-actual-value`, `pkm-pill`) and a generated //Fields// reference tab.

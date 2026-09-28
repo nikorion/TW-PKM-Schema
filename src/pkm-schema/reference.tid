@@ -1,0 +1,23 @@
+title: $:/plugins/nikorion/pkm-schema/reference
+caption: <<pkm-schema-lingo Reference/Caption>>
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<!--
+	The plugin tab listing every field and vocabulary. Nothing here is written by
+	hand: both tables are generated from the definitions, so the page gives the wiki's
+	current state — a field or a value added, removed or reordered shows up at once.
+-->
+
+<$transclude $variable="pkm-schema-lingo" title="Reference/Intro" $mode="block"/>
+
+{{$:/plugins/nikorion/pkm-schema/reference/fields}}
+
+<h2><<pkm-schema-lingo Reference/VocabulariesHeading>></h2>
+
+<$transclude $variable="pkm-schema-lingo" title="Reference/VocabulariesIntro" $mode="block"/>
+
+{{$:/plugins/nikorion/pkm-schema/reference/vocabularies}}
+
+<$transclude $variable="pkm-schema-lingo" title="Reference/Outro" $mode="block"/>

@@ -12,20 +12,20 @@ type: text/vnd.tiddlywiki
 <<detect-language-lingo "Playground/ApiBody">>
 
 |!<<detect-language-lingo "Playground/Table/Call">> |!<<detect-language-lingo "Playground/Table/Result">> |
-|`[function[kms-fields]]` |<$text text={{{ [function[kms-fields]] +[join[, ]] }}}/> |
-|`[function[kms-field-kind],[needs]]` |<$text text={{{ [function[kms-field-kind],[needs]] }}}/> |
-|`[function[kms-field-label],[technology]]` |<$text text={{{ [function[kms-field-label],[technology]] }}}/> |
-|`[function[kms-field-description],[lifecycle]]` |<$text text={{{ [function[kms-field-description],[lifecycle]] }}}/> |
-|`[function[kms-field-applies],[status]]` |<$text text={{{ [function[kms-field-applies],[status]] }}}/> |
-|`[function[kms-field-applies-filter],[status]]` |<code><$text text={{{ [function[kms-field-applies-filter],[status]] }}}/></code> |
-|`[function[kms-vocab-values],[maturity]]` |<$text text={{{ [function[kms-vocab-values],[maturity]] +[join[, ]] }}}/> |
-|`[function[kms-vocab-blank],[maturity]]` |<$text text={{{ [function[kms-vocab-blank],[maturity]] }}}/> |
-|`[function[kms-vocab-ungrouped-values],[role]]` |<$text text={{{ [function[kms-vocab-ungrouped-values],[role]] +[join[, ]] }}}/> |
-|`[function[kms-vocab-groups],[role]]` |<$text text={{{ [function[kms-vocab-groups],[role]] +[join[, ]] }}}/> |
-|`[function[kms-vocab-group-label],[role],[register]]` |<$text text={{{ [function[kms-vocab-group-label],[role],[register]] }}}/> |
-|`[function[kms-vocab-label],[role],[snippet]]` |<$text text={{{ [function[kms-vocab-label],[role],[snippet]] }}}/> |
-|`[function[kms-vocab-icon],[role],[snippet]]` |<$text text={{{ [function[kms-vocab-icon],[role],[snippet]] }}}/> |
-|`[function[kms-vocab-hint],[needs],[split]]` |<$text text={{{ [function[kms-vocab-hint],[needs],[split]] }}}/> |
-|`[function[kms-vocab-plural],[role],[task]]` |<$text text={{{ [function[kms-vocab-plural],[role],[task]] }}}/> |
-|`<$transclude $variable="kms-vocab-item" field="status" value="doing"/>` |<$transclude $variable="kms-vocab-item" field="status" value="doing"/> |
-|`<$transclude $variable="kms-pill" field="technology" value="TiddlyWiki"/>` |<$transclude $variable="kms-pill" field="technology" value="TiddlyWiki"/> |
+|`[function[pkm-all-fields]]` |<$text text={{{ [function[pkm-all-fields]] +[join[, ]] }}}/> |
+|`[function[pkm-field-kind],[needs]]` |<$text text={{{ [function[pkm-field-kind],[needs]] }}}/> |
+|`[function[pkm-field-label],[technology]]` |<$text text={{{ [function[pkm-field-label],[technology]] }}}/> |
+|`[function[pkm-field-description],[lifecycle]]` |<$text text={{{ [function[pkm-field-description],[lifecycle]] }}}/> |
+|`[function[pkm-field-applies],[status]]` |<$text text={{{ [function[pkm-field-applies],[status]] }}}/> |
+|`[function[pkm-field-applies-filter],[status]]` |<code><$text text={{{ [function[pkm-field-applies-filter],[status]] }}}/></code> |
+|`[function[pkm-vocab-values],[maturity]]` |<$text text={{{ [function[pkm-vocab-values],[maturity]] +[join[, ]] }}}/> |
+|`[function[pkm-vocab-blank],[maturity]]` |<$text text={{{ [function[pkm-vocab-blank],[maturity]] }}}/> |
+|`[function[pkm-vocab-ungrouped-values],[role]]` |<$text text={{{ [function[pkm-vocab-ungrouped-values],[role]] +[join[, ]] }}}/> |
+|`[function[pkm-vocab-groups],[role]]` |<$text text={{{ [function[pkm-vocab-groups],[role]] +[join[, ]] }}}/> |
+|`[function[pkm-vocab-group-label],[role],[register]]` |<$text text={{{ [function[pkm-vocab-group-label],[role],[register]] }}}/> |
+|`[function[pkm-vocab-label],[role],[snippet]]` |<$text text={{{ [function[pkm-vocab-label],[role],[snippet]] }}}/> |
+|`[function[pkm-vocab-icon],[role],[snippet]]` |<$text text={{{ [function[pkm-vocab-icon],[role],[snippet]] }}}/> |
+|`[function[pkm-vocab-hint],[needs],[split]]` |<$text text={{{ [function[pkm-vocab-hint],[needs],[split]] }}}/> |
+|`[function[pkm-vocab-plural],[role],[task]]` |<$text text={{{ [function[pkm-vocab-plural],[role],[task]] }}}/> |
+|`<$transclude $variable="pkm-vocab-item" field="status" value="doing"/>` |<$transclude $variable="pkm-vocab-item" field="status" value="doing"/> |
+|`<$transclude $variable="pkm-pill" field="technology" value="TiddlyWiki"/>` |<$transclude $variable="pkm-pill" field="technology" value="TiddlyWiki"/> |

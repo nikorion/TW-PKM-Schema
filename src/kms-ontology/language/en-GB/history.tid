@@ -1,4 +1,0 @@
-title: $:/plugins/nikorion/kms-ontology/language/en-GB/history
-type: text/vnd.tiddlywiki
-
-* ''0.1.0'' -- 2026.09.28 -- Hello! The fields and vocabularies of the kms suite, taken out of [[Base Fields|https://github.com/nikorion/TW-Base-Fields]] 0.3.0 so that every kms plugin reads them from one place: one definition per field (`kind`, vocabulary, groups, blank value, `applies-filter`), icons, labels, descriptions and translations (en-GB, fr-FR), a read API (`kms-fields`, `kms-field-*`, `kms-vocab-*`, `kms-pill`) and a generated //Fields// reference tab.

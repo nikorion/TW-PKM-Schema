@@ -72,7 +72,7 @@ Les valeurs d'un champ liste se dessinent en pastilles, comme les tags, chaque c
 </$list>
 ```
 
-Si un champ s'applique à un tiddler, et les tons qu'un tiddler tire de ses valeurs : `[function[pkm-applies-to],[status],<currentTiddler>]` (`yes` ou rien), `[function[pkm-tones],<currentTiddler>]` (`success`, `muted`…).
+Si un champ s'applique à un tiddler, et les tons qu'un tiddler tire de ses valeurs : `[function[pkm-applies-to],[status],<currentTiddler>]` (`yes` ou rien), `[function[pkm-tones],<currentTiddler>]` (`success`, `danger`…).
 
 Si un champ est //périmé// sur un tiddler — il garde une valeur alors qu'il ne s'applique pas (son rôle a changé depuis) — : `[function[pkm-is-stale],[status],<currentTiddler>]` (le tiddler, ou rien). L'info-bulle d'une valeur — son texte d'aide, puis la valeur stockée quand son libellé en diffère — est `[function[pkm-vocab-tooltip],[role],[guide]]` ; `[function[pkm-actual-value],<value>]` donne seule la ligne « valeur réelle : … », pour toute valeur affichée autrement que stockée.
 

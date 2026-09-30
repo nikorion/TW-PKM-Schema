@@ -4,7 +4,7 @@ kind: vocab
 list: none considering todo doing paused done dropped
 blank-value: none
 tone-success: done
-tone-muted: dropped
+tone-danger: dropped
 applies-filter: [<currentTiddler>get[role]match[task]] [<currentTiddler>get[role]match[tasklist]] [<currentTiddler>get[role]match[routine]] [<currentTiddler>!has[role]]
 type: text/vnd.tiddlywiki
 
@@ -12,4 +12,4 @@ One value from the vocabulary in `list`, in display order. `none` is the blank v
 
 `status` says how far along a piece of work is, which only means something on a tiddler that //is// a piece of work: `applies-filter` accepts the `task`, `tasklist` and `routine` roles (a routine's status is its current run), and tiddlers with no role at all. When these roles change, change `Field/status/Applies` in each language too: it names them for the reader — and the same filter on `priority` and `due`.
 
-`tone-success` and `tone-muted` give two values a //tone// (see `pkm-vocab-tone` in the API): a finished piece of work reads as done, a dropped one as set aside, wherever a consumer shows it — a table greys the row, say.
+`tone-success` and `tone-danger` give two values a //tone// (see `pkm-vocab-tone` in the API): a finished piece of work reads as done, a dropped one as set aside, wherever a consumer shows it — a table greys the row, say.

@@ -36,7 +36,7 @@ To load the plugin in another Node.js wiki, symlink `src/pkm-schema` as `$TIDDLY
 - **Only the slug is stored.** Icons and labels are resolved at render time, in the wiki's language, falling back to en-GB, then to the slug itself.
 - **Blank value.** A vocabulary's `blank-value` stands for the empty field and is never stored; consumers show it while the field is empty and clear the field when it is chosen.
 - **Applicability.** `applies-filter` (evaluated with `currentTiddler`) says where a field means something. Consumers hide the field elsewhere — unless it holds a value, which they keep showing, flagged.
-- **Tones.** A vocabulary value may carry a tone (`tone-success: done` lists the values with the `success` tone). It says how a tiddler holding it reads — done, set aside — never how to draw it; `pkm-tones` gives a tiddler's tones, from the vocabulary fields that apply to it only. Consumers map a tone to a style of their own (PKM Fields: a table row class `nk-dyntable-row-<tone>`). Tones in use: `success`, `muted`.
+- **Tones.** A vocabulary value may carry a tone (`tone-success: done` lists the values with the `success` tone). It says how a tiddler holding it reads — done, set aside — never how to draw it; `pkm-tones` gives a tiddler's tones, from the vocabulary fields that apply to it only. Consumers map a tone to a style of their own (PKM Fields: a table row class `nk-dyntable-row-<tone>`). Tones in use: `success`, `danger`.
 - **Unresolved functions fail silently.** A consumer must check that the schema defines a field (`[[$:/plugins/nikorion/pkm-schema/fields/<field>]get[kind]]`) before calling any `pkm-*` function on it: an undefined function called through `function` returns every tiddler of the wiki.
 
 ## Extending

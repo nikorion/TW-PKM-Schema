@@ -72,7 +72,7 @@ A list field's values are drawn as pills, like tags, each field with its own fal
 </$list>
 ```
 
-Whether a field applies to a tiddler, and the tones a tiddler takes from its values: `[function[pkm-applies-to],[status],<currentTiddler>]` (`yes` or nothing), `[function[pkm-tones],<currentTiddler>]` (`success`, `muted`…).
+Whether a field applies to a tiddler, and the tones a tiddler takes from its values: `[function[pkm-applies-to],[status],<currentTiddler>]` (`yes` or nothing), `[function[pkm-tones],<currentTiddler>]` (`success`, `danger`…).
 
 Whether a field is //stale// on a tiddler — it holds a value although it does not apply (its role changed since) —: `[function[pkm-is-stale],[status],<currentTiddler>]` (the tiddler, or nothing). A value's tooltip — its hint, then the stored value when its label differs — is `[function[pkm-vocab-tooltip],[role],[guide]]`; `[function[pkm-actual-value],<value>]` gives the "actual value: …" line alone, for any value shown otherwise than as stored.
 

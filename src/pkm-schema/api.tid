@@ -182,7 +182,7 @@ type: text/vnd.tiddlywiki
 	Tones. A vocabulary may give some of its values a tone, one definition field per
 	tone listing the values it marks (`status`: `tone-success: done`). A tone says how
 	a tiddler holding the value reads, not how to draw it: each consumer maps it to a
-	style of its own. Tones in use: `success` (the work is done), `muted` (set aside).
+	style of its own. Tones in use: `success` (the work is done), `danger` (set aside).
 -->
 
 <!-- The tone of a value. Empty when it has none. -->

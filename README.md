@@ -27,7 +27,7 @@ pnpm build   # dist/TW-PKM-Schema-Plugin.json + docs/TW-PKM-Schema-Wiki.html
 
 To load the plugin in another Node.js wiki, symlink `src/pkm-schema` as `$TIDDLYWIKI_PLUGIN_PATH/nikorion/pkm-schema` and list `"nikorion/pkm-schema"` in that wiki's `tiddlywiki.info`. Requires TiddlyWiki ≥ 5.3.0.
 
-[↑ Back to contents](#contents)
+[↑](#contents "Back to contents")
 
 ## Source layout
 
@@ -43,7 +43,7 @@ To load the plugin in another Node.js wiki, symlink `src/pkm-schema` as `$TIDDLY
 | `reference.tid`, `reference/*.tid` | the *Fields* tab, generated from the definitions (the field table is also transcluded by the readme) |
 | `language/lingo.tid`, `language/<lang>/reference.multids`, `settings.multids` | the plugin's own UI strings |
 
-[↑ Back to contents](#contents)
+[↑](#contents "Back to contents")
 
 ## How it works
 
@@ -54,7 +54,7 @@ To load the plugin in another Node.js wiki, symlink `src/pkm-schema` as `$TIDDLY
 - **Tones.** A vocabulary value may carry a tone (`tone-success: done` lists the values with the `success` tone). It says how a tiddler holding it reads — done, set aside — never how to draw it; `pkm-tones` gives a tiddler's tones, from the vocabulary fields that apply to it only. Consumers map a tone to a style of their own (PKM Fields: a table row class `nk-dyntable-row-<tone>`). Tones in use: `success`, `danger`.
 - **Unresolved functions fail silently.** A consumer must check that the schema defines a field (`[[$:/plugins/nikorion/pkm-schema/fields/<field>]get[kind]]`) before calling any `pkm-*` function on it: an undefined function called through `function` returns every tiddler of the wiki.
 
-[↑ Back to contents](#contents)
+[↑](#contents "Back to contents")
 
 ## Extending
 
@@ -63,16 +63,16 @@ To load the plugin in another Node.js wiki, symlink `src/pkm-schema` as `$TIDDLY
 - **A tone**: list its values in a `tone-<tone>` field of the definition. A new tone name also needs a style in each consumer that shows tones.
 - **A new `kind`** is a change to the contract: every consumer needs a control/template for it (PKM Fields: an editor control and a table cell).
 
-[↑ Back to contents](#contents)
+[↑](#contents "Back to contents")
 
 ## On a TiddlyWiki upgrade
 
 `pkm-pill` copies the core's `tag-body-inner` (colour and icon cascades, `contrastcolour`), a procedure local to `$:/core/ui/EditTemplate/tags` and so unreachable from outside: diff it against the new core and resync.
 
-[↑ Back to contents](#contents)
+[↑](#contents "Back to contents")
 
 ## License
 
 MIT — see `LICENSE`.
 
-[↑ Back to contents](#contents)
+[↑](#contents "Back to contents")

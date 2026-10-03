@@ -27,7 +27,7 @@ pnpm build   # dist/TW-PKM-Schema-Plugin.json + docs/TW-PKM-Schema-Wiki.html
 
 Pour charger le plugin dans un autre wiki Node.js, créer un lien symbolique de `src/pkm-schema` vers `$TIDDLYWIKI_PLUGIN_PATH/nikorion/pkm-schema` et ajouter `"nikorion/pkm-schema"` au `tiddlywiki.info` de ce wiki. Requiert TiddlyWiki ≥ 5.3.0.
 
-[↑ Retour au sommaire](#sommaire)
+[↑](#sommaire "Retour au sommaire")
 
 ## Organisation des sources
 
@@ -43,7 +43,7 @@ Pour charger le plugin dans un autre wiki Node.js, créer un lien symbolique de 
 | `reference.tid`, `reference/*.tid` | l'onglet *Fields*, généré à partir des définitions (le tableau des champs est aussi transclus par le readme) |
 | `language/lingo.tid`, `language/<lang>/reference.multids`, `settings.multids` | les chaînes d'interface propres au plugin |
 
-[↑ Retour au sommaire](#sommaire)
+[↑](#sommaire "Retour au sommaire")
 
 ## Fonctionnement
 
@@ -54,7 +54,7 @@ Pour charger le plugin dans un autre wiki Node.js, créer un lien symbolique de 
 - **Tonalités.** Une valeur de vocabulaire peut porter une tonalité (`tone-success: done` liste les valeurs de tonalité `success`). Elle dit comment se lit un tiddler qui la porte — terminé, mis de côté —, jamais comment le dessiner ; `pkm-tones` donne les tonalités d'un tiddler, à partir des seuls champs de vocabulaire qui s'y appliquent. Chaque consommateur associe une tonalité à un style qui lui est propre (PKM Fields : une classe de ligne de tableau `nk-dyntable-row-<tone>`). Tonalités utilisées : `success`, `danger`.
 - **Les fonctions non résolues échouent en silence.** Un consommateur doit vérifier que le schéma définit un champ (`[[$:/plugins/nikorion/pkm-schema/fields/<field>]get[kind]]`) avant d'appeler une fonction `pkm-*` dessus : une fonction indéfinie appelée via `function` renvoie tous les tiddlers du wiki.
 
-[↑ Retour au sommaire](#sommaire)
+[↑](#sommaire "Retour au sommaire")
 
 ## Extension
 
@@ -63,16 +63,16 @@ Pour charger le plugin dans un autre wiki Node.js, créer un lien symbolique de 
 - **Une tonalité** : lister ses valeurs dans un champ `tone-<tone>` de la définition. Un nouveau nom de tonalité exige aussi un style dans chaque consommateur qui affiche les tonalités.
 - **Un nouveau `kind`** est une modification du contrat : chaque consommateur a besoin d'un contrôle/modèle pour lui (PKM Fields : un contrôle d'éditeur et une cellule de tableau).
 
-[↑ Retour au sommaire](#sommaire)
+[↑](#sommaire "Retour au sommaire")
 
 ## Lors d'une mise à jour de TiddlyWiki
 
 `pkm-pill` recopie le `tag-body-inner` du core (cascades de couleur et d'icône, `contrastcolour`), une procédure locale à `$:/core/ui/EditTemplate/tags` et donc inaccessible de l'extérieur : la comparer au nouveau core et resynchroniser.
 
-[↑ Retour au sommaire](#sommaire)
+[↑](#sommaire "Retour au sommaire")
 
 ## Licence
 
 MIT — voir `LICENSE`.
 
-[↑ Retour au sommaire](#sommaire)
+[↑](#sommaire "Retour au sommaire")

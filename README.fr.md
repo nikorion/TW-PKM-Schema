@@ -6,15 +6,6 @@ Sources du plugin [TiddlyWiki](https://tiddlywiki.com) `$:/plugins/nikorion/pkm-
 
 Ce README s'adresse à qui veut modifier le schéma. Ce que signifient les champs pour un utilisateur du wiki, et comment s'en servir en wikitext, relève du readme du plugin lui-même (`src/pkm-schema/language/<lang>/readme.tid`). Le wiki de démo `docs/TW-PKM-Schema-Wiki.html` appelle l'API en direct dans son Playground.
 
-## Sommaire
-
-- [Prise en main](#prise-en-main)
-- [Organisation des sources](#organisation-des-sources)
-- [Fonctionnement](#fonctionnement)
-- [Extension](#extension)
-- [Lors d'une mise à jour de TiddlyWiki](#lors-dune-mise-à-jour-de-tiddlywiki)
-- [Licence](#licence)
-
 ## Prise en main
 
 ```sh
@@ -26,8 +17,6 @@ pnpm build   # dist/TW-PKM-Schema-Plugin.json + docs/TW-PKM-Schema-Wiki.html
 `pnpm dev` pousse toute modification sous `src/pkm-schema` ou `wiki/tiddlers` directement dans l'onglet de navigateur déjà ouvert ; seul `plugin.info` redémarre le serveur. Ne pas recharger l'onglet pour voir une modification : il reviendrait tel que le serveur l'a chargé au démarrage. Arrêter avec deux Ctrl+C. Pour voir une modification à travers l'éditeur et les tableaux, lancer plutôt le wiki d'intégration de la suite (`../PKM`, `pnpm dev` là-bas) : il charge tous les plugins pkm et surveille toutes leurs sources.
 
 Pour charger le plugin dans un autre wiki Node.js, créer un lien symbolique de `src/pkm-schema` vers `$TIDDLYWIKI_PLUGIN_PATH/nikorion/pkm-schema` et ajouter `"nikorion/pkm-schema"` au `tiddlywiki.info` de ce wiki. Requiert TiddlyWiki ≥ 5.3.0.
-
-[↑](#sommaire "Retour au sommaire")
 
 ## Organisation des sources
 
@@ -43,8 +32,6 @@ Pour charger le plugin dans un autre wiki Node.js, créer un lien symbolique de 
 | `reference.tid`, `reference/*.tid` | l'onglet *Fields*, généré à partir des définitions (le tableau des champs est aussi transclus par le readme) |
 | `language/lingo.tid`, `language/<lang>/reference.multids`, `settings.multids` | les chaînes d'interface propres au plugin |
 
-[↑](#sommaire "Retour au sommaire")
-
 ## Fonctionnement
 
 - **Les définitions sont des données, l'API est le contrat.** Les consommateurs ne lisent jamais `fields/*` ni les chaînes de langue directement ; ils appellent les fonctions `pkm-*` (via l'opérateur `function`, qui lie les paramètres : une fonction personnalisée appelée comme opérateur direct ne le fait pas, TW 5.4). Renommer un champ de définition ou une clé de langue est une affaire interne ; renommer ou modifier une fonction de l'API casse la suite.
@@ -54,8 +41,6 @@ Pour charger le plugin dans un autre wiki Node.js, créer un lien symbolique de 
 - **Tonalités.** Une valeur de vocabulaire peut porter une tonalité (`tone-success: done` liste les valeurs de tonalité `success`). Elle dit comment se lit un tiddler qui la porte — terminé, mis de côté —, jamais comment le dessiner ; `pkm-tones` donne les tonalités d'un tiddler, à partir des seuls champs de vocabulaire qui s'y appliquent. Chaque consommateur associe une tonalité à un style qui lui est propre (PKM Fields : une classe de ligne de tableau `nk-dyntable-row-<tone>`). Tonalités utilisées : `success`, `danger`.
 - **Les fonctions non résolues échouent en silence.** Un consommateur doit vérifier que le schéma définit un champ (`[[$:/plugins/nikorion/pkm-schema/fields/<field>]get[kind]]`) avant d'appeler une fonction `pkm-*` dessus : une fonction indéfinie appelée via `function` renvoie tous les tiddlers du wiki.
 
-[↑](#sommaire "Retour au sommaire")
-
 ## Extension
 
 - **Une valeur de vocabulaire** : son slug dans le `list` de `fields/<field>.tid` (pour `role`, aussi dans un `group-<slug>`, sinon elle est proposée avant le premier groupe), son icône dans `icons.multids`, son libellé (et son indication facultative) dans chaque `language/<lang>/vocab.multids`. Un nouveau rôle exige aussi son `…/Plural` dans chaque langue. Sans libellé, une valeur affiche son slug ; sans icône, pas d'icône.
@@ -63,16 +48,10 @@ Pour charger le plugin dans un autre wiki Node.js, créer un lien symbolique de 
 - **Une tonalité** : lister ses valeurs dans un champ `tone-<tone>` de la définition. Un nouveau nom de tonalité exige aussi un style dans chaque consommateur qui affiche les tonalités.
 - **Un nouveau `kind`** est une modification du contrat : chaque consommateur a besoin d'un contrôle/modèle pour lui (PKM Fields : un contrôle d'éditeur et une cellule de tableau).
 
-[↑](#sommaire "Retour au sommaire")
-
 ## Lors d'une mise à jour de TiddlyWiki
 
 `pkm-pill` recopie le `tag-body-inner` du core (cascades de couleur et d'icône, `contrastcolour`), une procédure locale à `$:/core/ui/EditTemplate/tags` et donc inaccessible de l'extérieur : la comparer au nouveau core et resynchroniser.
 
-[↑](#sommaire "Retour au sommaire")
-
 ## Licence
 
 MIT — voir `LICENSE`.
-
-[↑](#sommaire "Retour au sommaire")

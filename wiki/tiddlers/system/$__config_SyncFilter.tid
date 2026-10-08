@@ -1,4 +1,4 @@
 title: $:/config/SyncFilter
 type: text/vnd.tiddlywiki
 
-[is[tiddler]] -[[$:/core]] -[[$:/library/sjcl.js]] -[prefix[$:/boot/]] -[prefix[$:/HistoryList]] -[prefix[$:/StoryList]] -[[$:/language]] -[prefix[$:/nikorion/language/]] -[status[pending]plugin-type[import]] -[[$:/Import]] -[[$:/isEncrypted]] -[prefix[$:/status/]] -[prefix[$:/state/]] -[prefix[$:/temp/]] -[prefix[$:/plugins/nikorion/pkm-schema/]] -[prefix[$:/config/nikorion/pkm-schema/]] -[[$:/tags/nikorion/pkm/Field]]
+[is[tiddler]] -[[$:/core]] -[[$:/library/sjcl.js]] -[prefix[$:/boot/]] -[prefix[$:/HistoryList]] -[prefix[$:/StoryList]] -[[$:/language]] -[prefix[$:/nikorion/language/]] -[status[pending]plugin-type[import]] -[[$:/Import]] -[[$:/isEncrypted]] -[prefix[$:/status/]] -[prefix[$:/state/]] -[prefix[$:/temp/]] -[prefix[$:/plugins/nikorion/]] -[prefix[$:/config/nikorion/pkm-schema/]] -[[$:/tags/nikorion/pkm/Field]]

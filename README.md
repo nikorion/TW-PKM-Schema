@@ -4,14 +4,14 @@
 
 Source of the [TiddlyWiki](https://tiddlywiki.com) plugin `$:/plugins/nikorion/pkm-schema`, the schema of the *pkm* suite: the fields a tiddler of a pkm wiki can carry, their controlled vocabularies, icons, labels and translations, and the API the other pkm plugins read them through — [TW-PKM-Fields](https://github.com/nikorion/TW-PKM-Fields): the editor, and the columns of [TW-Dynamic-Table](https://github.com/nikorion/TW-Dynamic-Table), which itself knows nothing of the schema. Pure wikitext, no JavaScript, no UI of its own but a reference tab.
 
-This README is for whoever wants to change the schema. What the fields mean for a wiki user, and how to use them in wikitext, is the plugin's own readme (`src/pkm-schema/language/<lang>/readme.tid`). The demo wiki `docs/TW-PKM-Schema-Wiki.html` calls the API live in its Playground.
+This README is for whoever wants to change the schema. What the fields mean for a wiki user, and how to use them in wikitext, is the plugin's own readme (`src/pkm-schema/language/<lang>/readme.tid`). The [online demo](https://nikorion.github.io/TW-PKM-Schema/) calls the API live in its Playground.
 
 ## Getting started
 
 ```sh
 pnpm install
 pnpm dev     # dev wiki (wiki/) + hot reload; the URL (random free port) is printed on start
-pnpm build   # dist/TW-PKM-Schema-Plugin.json + docs/TW-PKM-Schema-Wiki.html
+pnpm build   # dist/TW-PKM-Schema-Plugin.json + docs/ (demo wiki, published by CI)
 ```
 
 `pnpm dev` pushes any edit under `src/pkm-schema` or `wiki/tiddlers` straight into the browser tab already open; only `plugin.info` restarts the server. Do not reload the tab to see a change: it would come back as the server loaded it at boot. Stop with Ctrl+C twice. To see a change through the editor and the tables, run the suite's integration wiki instead (`../PKM`, `pnpm dev` there): it loads every pkm plugin and watches all their sources.
@@ -51,6 +51,19 @@ To load the plugin in another Node.js wiki, symlink `src/pkm-schema` as `$TIDDLY
 ## On a TiddlyWiki upgrade
 
 `pkm-pill` copies the core's `tag-body-inner` (colour and icon cascades, `contrastcolour`), a procedure local to `$:/core/ui/EditTemplate/tags` and so unreachable from outside: diff it against the new core and resync.
+
+## Installation
+
+**Live demo**: [https://nikorion.github.io/TW-PKM-Schema/](https://nikorion.github.io/TW-PKM-Schema/) — try the plugin before installing it.
+
+**From the nikorion plugin library** (TiddlyWiki then offers each new version as an update):
+
+1. In your wiki, create a tiddler tagged `$:/tags/PluginLibrary`, with a field `url` set to `https://nikorion.github.io/tw-dev/library/index.html` and a `caption` such as `nikorion`.
+2. Open *Control Panel → Plugins → Get more plugins*, choose the nikorion library and install **PKM Schema**.
+
+**By hand**: download [`TW-PKM-Schema-Plugin.json`](https://nikorion.github.io/TW-PKM-Schema/TW-PKM-Schema-Plugin.json) and drag it onto your wiki.
+
+Requires TiddlyWiki ≥ 5.3.0.
 
 ## License
 

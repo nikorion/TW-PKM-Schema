@@ -4,14 +4,14 @@
 
 Sources du plugin [TiddlyWiki](https://tiddlywiki.com) `$:/plugins/nikorion/pkm-schema`, le schéma de la suite *pkm* : les champs que peut porter un tiddler d'un wiki pkm, leurs vocabulaires contrôlés, icônes, libellés et traductions, et l'API par laquelle les autres plugins pkm les lisent — [TW-PKM-Fields](https://github.com/nikorion/TW-PKM-Fields) : l'éditeur, et les colonnes de [TW-Dynamic-Table](https://github.com/nikorion/TW-Dynamic-Table), qui lui-même ignore tout du schéma. Du wikitext pur, sans JavaScript, sans autre interface qu'un onglet de référence.
 
-Ce README s'adresse à qui veut modifier le schéma. Ce que signifient les champs pour un utilisateur du wiki, et comment s'en servir en wikitext, relève du readme du plugin lui-même (`src/pkm-schema/language/<lang>/readme.tid`). Le wiki de démo `docs/TW-PKM-Schema-Wiki.html` appelle l'API en direct dans son Playground.
+Ce README s'adresse à qui veut modifier le schéma. Ce que signifient les champs pour un utilisateur du wiki, et comment s'en servir en wikitext, relève du readme du plugin lui-même (`src/pkm-schema/language/<lang>/readme.tid`). La [démo en ligne](https://nikorion.github.io/TW-PKM-Schema/) appelle l'API en direct dans son Playground.
 
 ## Prise en main
 
 ```sh
 pnpm install
 pnpm dev     # wiki de dev (wiki/) + rechargement à chaud ; l'URL (port libre aléatoire) s'affiche au démarrage
-pnpm build   # dist/TW-PKM-Schema-Plugin.json + docs/TW-PKM-Schema-Wiki.html
+pnpm build   # dist/TW-PKM-Schema-Plugin.json + docs/ (wiki de démo, publié par la CI)
 ```
 
 `pnpm dev` pousse toute modification sous `src/pkm-schema` ou `wiki/tiddlers` directement dans l'onglet de navigateur déjà ouvert ; seul `plugin.info` redémarre le serveur. Ne pas recharger l'onglet pour voir une modification : il reviendrait tel que le serveur l'a chargé au démarrage. Arrêter avec deux Ctrl+C. Pour voir une modification à travers l'éditeur et les tableaux, lancer plutôt le wiki d'intégration de la suite (`../PKM`, `pnpm dev` là-bas) : il charge tous les plugins pkm et surveille toutes leurs sources.
@@ -51,6 +51,19 @@ Pour charger le plugin dans un autre wiki Node.js, créer un lien symbolique de 
 ## Lors d'une mise à jour de TiddlyWiki
 
 `pkm-pill` recopie le `tag-body-inner` du core (cascades de couleur et d'icône, `contrastcolour`), une procédure locale à `$:/core/ui/EditTemplate/tags` et donc inaccessible de l'extérieur : la comparer au nouveau core et resynchroniser.
+
+## Installation
+
+**Démo en ligne** : [https://nikorion.github.io/TW-PKM-Schema/](https://nikorion.github.io/TW-PKM-Schema/) — pour essayer le plugin avant de l'installer.
+
+**Depuis la bibliothèque de plugins nikorion** (TiddlyWiki propose ensuite chaque nouvelle version en mise à jour) :
+
+1. Dans votre wiki, créer un tiddler tagué `$:/tags/PluginLibrary`, avec un champ `url` valant `https://nikorion.github.io/tw-dev/library/index.html` et une `caption` comme `nikorion`.
+2. Ouvrir *Panneau de configuration → Plugins → Obtenir d'autres plugins*, choisir la bibliothèque nikorion et installer **PKM Schema**.
+
+**À la main** : télécharger [`TW-PKM-Schema-Plugin.json`](https://nikorion.github.io/TW-PKM-Schema/TW-PKM-Schema-Plugin.json) et le glisser-déposer sur votre wiki.
+
+Nécessite TiddlyWiki ≥ 5.3.0.
 
 ## Licence
 

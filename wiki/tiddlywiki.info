@@ -17,13 +17,50 @@
   },
   "build": {
     "plugin-json": [
-      "--output", "dist",
-      "--render", "$:/core/templates/exporters/JsonFile", "TW-PKM-Schema-Plugin.json", "text/plain", "", "exportFilter", "[[$:/plugins/nikorion/pkm-schema]]"
+      "--output",
+      "dist",
+      "--render",
+      "$:/core/templates/exporters/JsonFile",
+      "TW-PKM-Schema-Plugin.json",
+      "text/plain",
+      "",
+      "exportFilter",
+      "[[$:/plugins/nikorion/pkm-schema]]"
     ],
-    "html": [
-      "--output", "docs",
-      "--rendertiddler", "$:/core/save/all", "TW-PKM-Schema-Wiki.html", "text/plain", "",
-      "publishFilter", "-[[$:/config/SyncFilter]] -[[$:/config/FileSystemPaths]] -[[$:/config/OriginalTiddlerPaths]]"
+    "demo": [
+      "--output",
+      "docs",
+      "--render",
+      "$:/core/templates/exporters/JsonFile",
+      "TW-PKM-Schema-Plugin.json",
+      "text/plain",
+      "",
+      "exportFilter",
+      "[[$:/plugins/nikorion/pkm-schema]]",
+      "--savetiddlers",
+      "[!is[system]] :filter[get[type]prefix[image/]] -[get[type]match[image/svg+xml]]",
+      "images",
+      "--setfield",
+      "[!is[system]] :filter[get[type]prefix[image/]] -[get[type]match[image/svg+xml]]",
+      "_canonical_uri",
+      "$:/core/templates/canonical-uri-external-image",
+      "text/plain",
+      "--setfield",
+      "[!is[system]] :filter[get[type]prefix[image/]] -[get[type]match[image/svg+xml]]",
+      "text",
+      "",
+      "text/plain",
+      "--rendertiddler",
+      "$:/core/save/offline-external-js",
+      "index.html",
+      "text/plain",
+      "",
+      "publishFilter",
+      "-[[$:/config/SyncFilter]] -[[$:/config/FileSystemPaths]] -[[$:/config/OriginalTiddlerPaths]]",
+      "--render",
+      "$:/core/templates/tiddlywiki5.js",
+      "[[tiddlywikicore-]addsuffix<version>addsuffix[.js]]",
+      "text/plain"
     ]
   }
 }

@@ -8,6 +8,8 @@ Ce README s'adresse à qui veut modifier le schéma. Ce que signifient les champ
 
 ## Prise en main
 
+Cloner [tw-dev](https://github.com/nikorion/tw-dev) à côté de ce dépôt : `pnpm dev` l'exécute, et il relie lui-même les plugins nikorion que charge le wiki de dev — depuis les clones placés à côté de celui-ci (`../TW-Math`…), pour que vos modifications y soient prises en direct, sinon depuis une copie en lecture seule qu'il récupère sur GitHub. Ni lien symbolique, ni `TIDDLYWIKI_PLUGIN_PATH`, ni droits administrateur. Seul `pnpm build` a encore besoin de `TIDDLYWIKI_PLUGIN_PATH` : le faire pointer sur `../tw-dev/.state/TW-PKM-Schema/plugins`, créé par `pnpm dev`.
+
 ```sh
 pnpm install
 pnpm dev     # wiki de dev (wiki/) + rechargement à chaud ; l'URL (port libre aléatoire) s'affiche au démarrage

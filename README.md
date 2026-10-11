@@ -2,6 +2,8 @@
 
 **English** · [Français](README.fr.md)
 
+![Status](https://img.shields.io/badge/status-experimental-orange)
+
 Source of the [TiddlyWiki](https://tiddlywiki.com) plugin `$:/plugins/nikorion/pkm-schema`, the schema of the *pkm* suite: the fields a tiddler of a pkm wiki can carry, their controlled vocabularies, icons, labels and translations, and the API the other pkm plugins read them through — [TW-PKM-Fields](https://github.com/nikorion/TW-PKM-Fields): the editor, and the columns of [TW-Dynamic-Table](https://github.com/nikorion/TW-Dynamic-Table), which itself knows nothing of the schema. Pure wikitext, no JavaScript, no UI of its own but a reference tab.
 
 This README is for whoever wants to change the schema. What the fields mean for a wiki user, and how to use them in wikitext, is the plugin's own readme (`src/pkm-schema/language/<lang>/readme.tid`). The [online demo](https://nikorion.github.io/TW-PKM-Schema/) calls the API live in its Playground.
